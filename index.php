@@ -9,6 +9,6 @@ use app\Config;
 use app\http\Request;
 
 $app = new Config();
-$request = new Request();
+$request = new Request($app);
 
 $request->makeResponse();

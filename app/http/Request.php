@@ -12,9 +12,12 @@ class Request
     protected $api;
     protected $placesToStay;
     protected $isApi = false;
+    protected $app;
 
-    public function __construct()
+    public function __construct($app)
     {
+        $this->app =  $app;
+
         if (isset($_GET['path']))
         {
             $params = explode('/', $_GET['path']);
