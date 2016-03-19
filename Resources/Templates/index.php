@@ -5,6 +5,6 @@
 </head>
 <body>
     <h1>Places to Stay</h1>
-    {response}
+    {{{ $response }}}
 </body>
 </html>
