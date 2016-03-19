@@ -8,3 +8,7 @@ This needs to be be done using the API **ONLY**.
 ##Namspaces
 
 -- App
+
+##Instructions
+
+Copy app/Controllers/Config.example.php to app/Controllers/Config.php. Rename class to Config to work.
