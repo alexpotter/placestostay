@@ -15,18 +15,44 @@
 </head>
 <body>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" style="text-align: center;">
             <h1>Places to Stay</h1>
-            {{{ $response }}}
+            <h2>{{{ $message }}}</h2>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="padding-top: 30px;">
         <div class="col-xs-6">
             <div id="map">
 
             </div>
         </div>
+        <div class="col-xs-6">
+            <form class="form-horizontal" id="searchPlace">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 style="text-align: center;">Search a place:</h2>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <input type="text" name="location" class="form-control" style="font-size: 22pt; height: 60px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <button type="submit" class="btn btn-lg btn-success" style="display: block; margin: auto;">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div id="results">
+
+            </div>
+        </div>
     </div>
+    <script type="text/javascript">
+        $('#searchPlace').submit(function(e) {
+            $('#results').html('<h3>List here</h3>');
+            e.preventDefault();
+        });
+    </script>
     <script>
         // Note: This example requires that you consent to location sharing when
         // prompted by your browser. If you see the error "The Geolocation service
@@ -51,6 +77,7 @@
                     infoWindow.setPosition(pos);
                     infoWindow.setContent('Your location');
                     map.setCenter(pos);
+                    map.setZoom(10);
                 }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
                 });

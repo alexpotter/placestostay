@@ -24,7 +24,7 @@ class PlacesToStay
     public function index()
     {
         echo $this->view('./Resources/Templates/index.php', [
-            'response' => 'API RESPONSE'
+            'message' => 'Start your search now'
         ]);
     }
 }
