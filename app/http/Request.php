@@ -56,6 +56,8 @@ class Request
                     $this->endPointFound = true;
                     break;
                 case 'book':
+                    // Make functional inputs $_POST
+                    // i.e. $this->api->book($_POST['from']);
                     $this->api->book($this->variables[0], $this->variables[1], $this->variables[2], $this->variables[3]);
                     $this->endPointFound = true;
                     break;

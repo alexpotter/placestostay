@@ -9,7 +9,7 @@ class PlacesToStay
 
     }
 
-    function get_content($file, $data)
+    function view($file, $data)
     {
         $template = file_get_contents($file);
 
@@ -23,7 +23,7 @@ class PlacesToStay
 
     public function index()
     {
-        echo $this->get_content('./Resources/Templates/index.php', [
+        echo $this->view('./Resources/Templates/index.php', [
             'response' => 'API RESPONSE'
         ]);
     }
