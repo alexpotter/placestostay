@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style type="text/css">
         #map {
-            height: 100%;
+            height: 500px;
         }
     </style>
 </head>
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6">
             <div id="map">
 
             </div>
@@ -49,7 +49,7 @@
                     };
 
                     infoWindow.setPosition(pos);
-                    infoWindow.setContent('Location found.');
+                    infoWindow.setContent('Your location');
                     map.setCenter(pos);
                 }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -66,9 +66,6 @@
                 'Error: The Geolocation service failed.' :
                 'Error: Your browser doesn\'t support geolocation.');
         }
-    </script>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?sensor=SET_TO_TRUE_OR_FALSE">
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuK5rdDsSZpXyi5VBjW7g8N1IJUtAXZwA&callback=initMap">
