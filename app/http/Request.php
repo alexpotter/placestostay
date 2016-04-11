@@ -38,7 +38,7 @@ class Request
                 $this->route = isset($params[2]) ? $params[2] : 'index';
                 for ($count = 2; $count < count($params); $count ++)
                 {
-                    $this->params = $params[$count];
+                    $this->variables[] = $params[$count];
                 }
                 $this->isAdmin = true;
             }
