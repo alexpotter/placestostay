@@ -6,8 +6,8 @@ class PlacesToStay extends Controller
 {
     public function index()
     {
-        echo $this->view('./Resources/Templates/index.php', [
-            'message' => 'Start your search now'
+        echo $this->view('index.php', [
+            'message' => 'Start your search now',
         ]);
     }
 }

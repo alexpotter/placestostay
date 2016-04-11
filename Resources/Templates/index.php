@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-xs-12" style="text-align: center;">
             <h1>Places to Stay</h1>
-            <h2>{{{ $message }}}</h2>
+            <h2><?php echo $message ?></h2>
         </div>
     </div>
     <div class="row" style="padding-top: 30px;">

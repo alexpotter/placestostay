@@ -11,16 +11,14 @@ class Controller
 
     function view($file, $data)
     {
-        $template = file_get_contents($file);
-
-        foreach($data as $key => $value)
-        {
-            $template = str_replace('{{{ $'.$key.' }}}', $value, $template);
-        }
-
-        return $template;
+        extract($data);
+        include ('./Resources/Templates/'.$file);
     }
 
+    /**
+     * @param $array
+     * @param $statusCode
+     */
     public function returnJson($array, $statusCode)
     {
         http_response_code($statusCode);
