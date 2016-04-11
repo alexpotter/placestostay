@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-class Api
+class Api extends Controller
 {
     public function search($params)
     {
@@ -22,11 +22,5 @@ class Api
                 'to' => $to,
             ],
         ], 200);
-    }
-
-    public function returnJson($array, $statusCode)
-    {
-        http_response_code($statusCode);
-        echo json_encode($array);
     }
 }
