@@ -2,6 +2,7 @@
 
 namespace app\http;
 
+use app\Controllers\Admin;
 use app\Controllers\Api;
 use app\Controllers\PlacesToStay;
 
@@ -14,27 +15,37 @@ class Request
     protected $isApi = false;
     protected $app;
     protected $endPointFound = false;
+    protected $isAdmin = false;
 
     public function __construct($app)
     {
         $this->app =  $app;
 
-        if (isset($_GET['q']))
+        if (isset($_SERVER["PATH_INFO"]))
         {
-            $params = explode('/', $_GET['q']);
-            if ($params[0] == 'api')
+            $params = explode('/', $_SERVER["PATH_INFO"]);
+            if ($params[1] == 'api')
             {
-                $this->route = $params[1];
-                for ($count = 2; $count < count($params); $count ++)
+                $this->route = $params[2];
+                for ($count = 3; $count < count($params); $count ++)
                 {
                     $this->variables[] = $params[$count];
                 }
                 $this->isApi = true;
             }
+            else if ($params[1] == 'admin')
+            {
+                $this->route = isset($params[2]) ? $params[2] : 'index';
+                for ($count = 2; $count < count($params); $count ++)
+                {
+                    $this->params = $params[$count];
+                }
+                $this->isAdmin = true;
+            }
             else
             {
-                $this->route = $params[0];
-                $this->variables[] = $params[1];
+                $this->route = $params[1];
+                if(isset($params[2])) $this->variables[] = $params[1];
             }
         }
         else
@@ -63,6 +74,20 @@ class Request
                     break;
             }
         }
+        else if ($this->isAdmin)
+        {
+            switch($this->route) {
+                case 'login':
+                    $this->endPointFound = true;
+                    echo 'You are not logged in.';
+                    break;
+                case 'index':
+                    $admin = new Admin();
+                    $admin->dashboard();
+                    $this->endPointFound = true;
+                    break;
+            }
+        }
         else
         {
             switch ($this->route) {
@@ -70,13 +95,13 @@ class Request
                     $this->placesToStay->index();
                     $this->endPointFound = true;
                     break;
-                case 'get':
-                    echo 'foo';
+                case '':
+                    $this->placesToStay->index();
                     $this->endPointFound = true;
                     break;
             }
         }
         // Do 404
-        if (! $this->endPointFound) echo 'Lost yo';
+        if (! $this->endPointFound) echo 'Error 404';
     }
 }
