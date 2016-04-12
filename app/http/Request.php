@@ -45,7 +45,7 @@ class Request
             else
             {
                 $this->route = $params[1];
-                if(isset($params[2])) $this->variables[] = $params[1];
+                if(isset($params[2])) $this->variables[] = $params[2];
             }
         }
         else
