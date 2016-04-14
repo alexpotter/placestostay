@@ -2,16 +2,14 @@
 <html>
 <head>
     <title>Places to Stay</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        #map {
-            height: 500px;
-        }
-    </style>
+    <!-- jQuery -->
+    <script src="dist/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <!-- Custom scripts -->
+    <link rel="stylesheet" href="dist/css/style.css">
+    <script type="text/javascript" src="dist/js/frontend.js"></script>
 </head>
 <body>
     <div class="row">
@@ -47,12 +45,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $('#searchPlace').submit(function(e) {
-            $('#results').html('<h3>List here</h3>');
-            e.preventDefault();
-        });
-    </script>
     <script>
         // Note: This example requires that you consent to location sharing when
         // prompted by your browser. If you see the error "The Geolocation service
