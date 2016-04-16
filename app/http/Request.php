@@ -90,6 +90,6 @@ class Request
                     return $this->placesToStay->index();
             }
         }
-        echo 'foo';
+        echo '404';
     }
 }
