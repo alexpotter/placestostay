@@ -23,8 +23,14 @@ class Request
 
         if (isset($_SERVER["PATH_INFO"]))
         {
-            $params = explode('/', $_SERVER["PATH_INFO"]);
-            if ($params[1] == 'api')
+            $endPoint = rtrim($_SERVER["PATH_INFO"],"/");
+            $params = explode('/', $endPoint);
+
+            if (! isset($params[1]))
+            {
+                $this->route = 'index';
+            }
+            else if ($params[1] == 'api')
             {
                 $this->route = $params[2];
                 for ($count = 3; $count < count($params); $count ++)
@@ -35,7 +41,6 @@ class Request
             }
             else if ($params[1] == 'admin')
             {
-                $this->admin = new Admin();
                 $this->route = isset($params[2]) ? $params[2] : 'index';
                 for ($count = 2; $count < count($params); $count ++)
                 {
@@ -60,7 +65,7 @@ class Request
 
     public function makeResponse()
     {
-        if (file_exists('./'.$_SERVER['PATH_INFO']) && $_SERVER['REQUEST_URI'] != '/index.php' && $_SERVER['REQUEST_URI'] != '/index.php/') return;
+        if ((isset($_SERVER['PATH_INFO']) && file_exists('./'.$_SERVER['PATH_INFO'])) && $_SERVER['REQUEST_URI'] != '/index.php' && $_SERVER['REQUEST_URI'] != '/index.php/') return;
         if ($this->isApi)
         {
             switch ($this->route) {
@@ -76,8 +81,10 @@ class Request
         {
             switch($this->route) {
                 case 'login':
+                    $this->admin = new Admin();
                     return $this->admin->login();
                 case 'index':
+                    $this->admin = new Admin();
                     return $this->admin->dashboard();
             }
         }

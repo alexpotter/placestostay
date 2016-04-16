@@ -16,8 +16,16 @@ class Controller
     function view($file, $data = null)
     {
         if ($data) extract($data);
-        $url = 'http://'.$_SERVER['SERVER_NAME'].'/';
         include ('./Resources/Templates/'.$file.'.php');
+    }
+
+    /**
+     * @param null $path
+     * @return string
+     */
+    public function url($path = null)
+    {
+        return 'http://'.$_SERVER['SERVER_NAME'].'/'.$path;
     }
 
     /**
@@ -25,7 +33,7 @@ class Controller
      */
     public function redirect($location)
     {
-        header('Location: '.$location);
+        header('Location: http://'.$_SERVER['SERVER_NAME'].'/index.php/'.$location);
     }
 
     /**
