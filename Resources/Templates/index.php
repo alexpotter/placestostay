@@ -3,13 +3,13 @@
 <head>
     <title>Places to Stay</title>
     <!-- jQuery -->
-    <script src="dist/js/jquery.min.js"></script>
+    <script src="<?php echo $url; ?>dist/js/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="<?php echo $url; ?>bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="<?php echo $url; ?>bootstrap/js/bootstrap.js"></script>
     <!-- Custom scripts -->
-    <link rel="stylesheet" href="dist/css/style.css">
-    <script type="text/javascript" src="dist/js/frontend.js"></script>
+    <link rel="stylesheet" href="<?php echo $url; ?>dist/css/style.css">
+    <script type="text/javascript" src="<?php echo $url; ?>dist/js/frontend.js"></script>
 </head>
 <body>
     <div class="row">

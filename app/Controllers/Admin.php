@@ -6,15 +6,21 @@ class Admin extends Controller
 {
     public function __construct()
     {
+        if ($_SERVER['PATH_INFO'] == '/admin/login') return;
         if (! isset($_SESSION['admin']))
         {
-            header('Location: '.$this->login());
+            return $this->redirect($this->loginUrl());
         }
+    }
+
+    public function loginUrl()
+    {
+        return 'admin/login';
     }
 
     public function login()
     {
-        return 'admin/login';
+        return $this->view('admin/index');
     }
 
     public function dashboard()

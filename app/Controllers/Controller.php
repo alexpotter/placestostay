@@ -9,10 +9,23 @@ class Controller
 
     }
 
-    function view($file, $data)
+    /**
+     * @param $file
+     * @param $data
+     */
+    function view($file, $data = null)
     {
-        extract($data);
-        include ('./Resources/Templates/'.$file);
+        if ($data) extract($data);
+        $url = 'http://'.$_SERVER['SERVER_NAME'].'/';
+        include ('./Resources/Templates/'.$file.'.php');
+    }
+
+    /**
+     * @param $location
+     */
+    public function redirect($location)
+    {
+        header('Location: '.$location);
     }
 
     /**

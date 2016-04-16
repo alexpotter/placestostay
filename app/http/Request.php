@@ -14,8 +14,8 @@ class Request
     protected $placesToStay;
     protected $isApi = false;
     protected $app;
-    protected $endPointFound = false;
     protected $isAdmin = false;
+    protected $admin;
 
     public function __construct($app)
     {
@@ -35,6 +35,7 @@ class Request
             }
             else if ($params[1] == 'admin')
             {
+                $this->admin = new Admin();
                 $this->route = isset($params[2]) ? $params[2] : 'index';
                 for ($count = 2; $count < count($params); $count ++)
                 {
@@ -59,49 +60,36 @@ class Request
 
     public function makeResponse()
     {
+        if (file_exists('./'.$_SERVER['PATH_INFO']) && $_SERVER['REQUEST_URI'] != '/index.php' && $_SERVER['REQUEST_URI'] != '/index.php/') return;
         if ($this->isApi)
         {
             switch ($this->route) {
                 case 'search':
-                    $this->api->search($this->variables[0]);
-                    $this->endPointFound = true;
-                    break;
+                    return $this->api->search($this->variables[0]);
                 case 'book':
                     // Make functional inputs $_POST
                     // i.e. $this->api->book($_POST['from']);
-                    $this->api->book($this->variables[0], $this->variables[1], $this->variables[2], $this->variables[3]);
-                    $this->endPointFound = true;
-                    break;
+                    return $this->api->book($this->variables[0], $this->variables[1], $this->variables[2], $this->variables[3]);
             }
         }
         else if ($this->isAdmin)
         {
             switch($this->route) {
                 case 'login':
-                    $this->endPointFound = true;
-                    echo 'You are not logged in.';
-                    break;
+                    return $this->admin->login();
                 case 'index':
-                    $admin = new Admin();
-                    $admin->dashboard();
-                    $this->endPointFound = true;
-                    break;
+                    return $this->admin->dashboard();
             }
         }
         else
         {
             switch ($this->route) {
                 case 'index':
-                    $this->placesToStay->index();
-                    $this->endPointFound = true;
-                    break;
+                    return $this->placesToStay->index();
                 case '':
-                    $this->placesToStay->index();
-                    $this->endPointFound = true;
-                    break;
+                    return $this->placesToStay->index();
             }
         }
-        // Do 404
-        if (! $this->endPointFound) echo 'Error 404';
+        echo 'foo';
     }
 }
