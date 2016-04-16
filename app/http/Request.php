@@ -32,6 +32,7 @@ class Request
             }
             else if ($params[1] == 'api')
             {
+                $this->api = new Api();
                 $this->route = $params[2];
                 for ($count = 3; $count < count($params); $count ++)
                 {
@@ -59,7 +60,6 @@ class Request
             $this->route = 'index';
         }
 
-        $this->api = new Api();
         $this->placesToStay = new PlacesToStay();
     }
 
