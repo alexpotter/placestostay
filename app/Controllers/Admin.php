@@ -13,17 +13,43 @@ class Admin extends Controller
         }
     }
 
+    /**
+     * @return string
+     */
     public function loginUrl()
     {
         return 'admin/login';
     }
 
+    /**
+     *
+     */
     public function login()
     {
         return $this->view('admin/index');
     }
 
     public function dashboard()
+    {
+
+    }
+
+    public function addLocationForm()
+    {
+
+    }
+
+    public function addRoomForm()
+    {
+
+    }
+
+    public function addLocation()
+    {
+
+    }
+
+    public function addRoom()
     {
 
     }

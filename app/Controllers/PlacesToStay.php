@@ -10,4 +10,9 @@ class PlacesToStay extends Controller
             'message' => 'Start your search now',
         ]);
     }
+
+    public function login()
+    {
+
+    }
 }

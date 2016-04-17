@@ -32,7 +32,6 @@ class Request
             }
             else if ($params[1] == 'api')
             {
-                $this->api = new Api();
                 $this->route = $params[2];
                 for ($count = 3; $count < count($params); $count ++)
                 {
@@ -59,8 +58,6 @@ class Request
         {
             $this->route = 'index';
         }
-
-        $this->placesToStay = new PlacesToStay();
     }
 
     public function makeResponse()
@@ -68,13 +65,23 @@ class Request
         if ((isset($_SERVER['PATH_INFO']) && file_exists('./'.$_SERVER['PATH_INFO'])) && $_SERVER['REQUEST_URI'] != '/index.php' && $_SERVER['REQUEST_URI'] != '/index.php/') return;
         if ($this->isApi)
         {
+            $this->api = new Api();
             switch ($this->route) {
                 case 'search':
                     return $this->api->search($this->variables[0]);
                 case 'book':
                     // Make functional inputs $_POST
                     // i.e. $this->api->book($_POST['from']);
+                    if ($_SERVER['REQUEST_METHOD'] == 'GET') return $this->api->returnFail('Attempted booking using GET', 405);
                     return $this->api->book($this->variables[0], $this->variables[1], $this->variables[2], $this->variables[3]);
+                case 'get-booking':
+                    // Use GET requires API KEY
+                    echo 'View '.$this->variables[0];
+                    return;
+                case 'cancel-booking':
+                    if ($_SERVER['REQUEST_METHOD'] == 'GET') return $this->api->returnFail('Attempted to cancel booking using GET', 405);
+                    echo 'Cancel: '.$this->variables[0];
+                    return;
             }
         }
         else if ($this->isAdmin)
@@ -86,15 +93,22 @@ class Request
                 case 'index':
                     $this->admin = new Admin();
                     return $this->admin->dashboard();
+                case 'add-location':
+                    $this->admin = new Admin();
+                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addLocationForm() : $this->admin->addLocation();
+                case 'add-room':
+                    $this->admin = new Admin();
+                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom();
             }
         }
         else
         {
+            $this->placesToStay = new PlacesToStay();
             switch ($this->route) {
                 case 'index':
                     return $this->placesToStay->index();
-                case '':
-                    return $this->placesToStay->index();
+                case 'login':
+                    return $this->placesToStay->login();
             }
         }
         echo '404';
