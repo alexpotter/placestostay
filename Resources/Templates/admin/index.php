@@ -17,12 +17,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <style type="text/css">
         /*------------------------------------------------------------------
-[Master Stylesheet]
+            [Master Stylesheet]
 
-Project        : Aether
-Version		: 1.0
-Last change	: 2015/03/27
--------------------------------------------------------------------*/
+            Project        : Aether
+            Version		: 1.0
+            Last change	: 2015/03/27
+        -------------------------------------------------------------------*/
         /*------------------------------------------------------------------
         [Table of contents]
 
