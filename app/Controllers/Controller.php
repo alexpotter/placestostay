@@ -25,7 +25,8 @@ class Controller
      */
     public function url($path = null)
     {
-        return 'http://'.$_SERVER['SERVER_NAME'].'/'.$path;
+        // return 'http://'.$_SERVER['SERVER_NAME'].'/~apotter/'.$path;
+        return 'http://'.$_SERVER['SERVER_NAME'].'/apotter/'.$path;
     }
 
     /**
@@ -33,7 +34,8 @@ class Controller
      */
     public function redirect($location)
     {
-        header('Location: http://'.$_SERVER['SERVER_NAME'].'/index.php/'.$location);
+        // header('Location: http://'.$_SERVER['SERVER_NAME'].'/~apotter/index.php/'.$location);
+        header('Location: http://'.$_SERVER['SERVER_NAME'].'/apotter/index.php/'.$location);
     }
 
     /**

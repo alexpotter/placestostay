@@ -62,7 +62,8 @@ class Request
 
     public function makeResponse()
     {
-        if ((isset($_SERVER['PATH_INFO']) && file_exists('./'.$_SERVER['PATH_INFO'])) && $_SERVER['REQUEST_URI'] != '/index.php' && $_SERVER['REQUEST_URI'] != '/index.php/') return;
+        // if ((isset($_SERVER['PATH_INFO']) && file_exists('./'.$_SERVER['PATH_INFO'])) && $_SERVER['REQUEST_URI'] != '/~apotter/index.php' && $_SERVER['REQUEST_URI'] != '/~apotter/index.php/') return;
+        if ((isset($_SERVER['PATH_INFO']) && file_exists('./'.$_SERVER['PATH_INFO'])) && $_SERVER['REQUEST_URI'] != '/apotter/index.php' && $_SERVER['REQUEST_URI'] != '/apotter/index.php/') return;
         if ($this->isApi)
         {
             $this->api = new Api();
