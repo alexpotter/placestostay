@@ -67,6 +67,9 @@ class Request
         if ($this->isApi)
         {
             $this->api = new Api();
+            // Check API key here
+            // return error if bad key
+            
             switch ($this->route) {
                 case 'search':
                     return $this->api->search($this->variables[0]);
