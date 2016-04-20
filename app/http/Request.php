@@ -90,7 +90,7 @@ class Request
             switch($this->route) {
                 case 'login':
                     $this->admin = new Admin();
-                    return $this->admin->login();
+                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->login() : $this->admin->postLogin($_POST['username'], $_POST['password']);
                 case 'index':
                     $this->admin = new Admin();
                     return $this->admin->dashboard();

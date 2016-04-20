@@ -29,6 +29,13 @@ class Admin extends Controller
         return $this->view('admin/index');
     }
 
+    public function postLogin($username, $password)
+    {
+        echo $username;
+        echo '<br>';
+        echo $password;
+    }
+
     public function dashboard()
     {
 
