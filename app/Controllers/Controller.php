@@ -16,6 +16,10 @@ class Controller
     function view($file, $data = null)
     {
         if ($data) extract($data);
+
+        if ($flash = $this->checkFlash()) extract($flash);
+        $this->removeFlash();
+
         include ('./Resources/Templates/'.$file.'.php');
     }
 
@@ -46,5 +50,32 @@ class Controller
     {
         http_response_code($statusCode);
         echo json_encode($array);
+    }
+
+    /**
+     * @param $param
+     * @param $message
+     */
+    public function flash($param, $message)
+    {
+        $_SESSION['flash'] = [
+            $param => $message
+        ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkFlash()
+    {
+        return (isset($_SESSION['flash'])) ? $_SESSION['flash'] : false;
+    }
+
+    /**
+     *
+     */
+    public function removeFlash()
+    {
+        unset($_SESSION['flash']);
     }
 }

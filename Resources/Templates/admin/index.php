@@ -470,6 +470,13 @@
 <!-- LOGIN FORM -->
 <div class="text-center" style="padding:50px 0">
     <div class="logo">login</div>
+    <?php if($flash['error']): ?>
+        <div class="row">
+            <div class="alert alert-danger col-md-4 col-md-offset-4">
+                <?php echo $flash['error']; ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <!-- Main Form -->
     <div class="login-form-1">
         <form id="login-form" class="text-left" method="post">

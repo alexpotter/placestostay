@@ -39,8 +39,7 @@ class Admin extends Controller
     {
         $user = new User();
         $admin = $user->authenticate($email, $password);
-        if ($admin) $_SESSION['admin'] = $admin;
-
+        $admin ? $_SESSION['admin'] = $admin : $this->flash('error', 'Incorrect username password');
         return $this->redirect('admin');
     }
 
