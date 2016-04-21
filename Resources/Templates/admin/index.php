@@ -3,13 +3,13 @@
 <head>
     <title>Places to Stay</title>
     <!-- jQuery -->
-    <script src="<?php echo $this->url(); ?>dist/js/jquery.min.js"></script>
+    <script src="<?php echo $this->fileUrl('dist/js/jquery.min.js'); ?>"></script>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="<?php echo $this->url(); ?>bootstrap/css/bootstrap.css">
-    <script type="text/javascript" src="<?php echo $this->url(); ?>bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="<?php echo $this->fileUrl('bootstrap/css/bootstrap.css'); ?>">
+    <script type="text/javascript" src="<?php echo $this->fileUrl('bootstrap/js/bootstrap.js'); ?>"></script>
     <!-- Custom scripts -->
-    <link rel="stylesheet" href="<?php echo $this->url(); ?>dist/css/style.css">
-    <script type="text/javascript" src="<?php echo $this->url(); ?>dist/js/frontend.js"></script>
+    <link rel="stylesheet" href="<?php echo $this->fileUrl('dist/css/style.css'); ?>">
+    <script type="text/javascript" src="<?php echo $this->fileUrl('dist/js/frontend.js'); ?>"></script>
     <!-- All the files that are required -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
@@ -485,7 +485,7 @@
                 <div class="login-group">
                     <div class="form-group">
                         <label for="lg_username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="username" value="<?php echo $flash['email']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="lg_password" class="sr-only">Password</label>

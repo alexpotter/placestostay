@@ -29,6 +29,16 @@ class Controller
      */
     public function url($path = null)
     {
+        // return 'http://'.$_SERVER['SERVER_NAME'].'/~apotter/index.php/'.$path;
+        return 'http://'.$_SERVER['SERVER_NAME'].'/apotter/index.php/'.$path;
+    }
+
+    /**
+     * @param null $path
+     * @return string
+     */
+    public function fileUrl($path = null)
+    {
         // return 'http://'.$_SERVER['SERVER_NAME'].'/~apotter/'.$path;
         return 'http://'.$_SERVER['SERVER_NAME'].'/apotter/'.$path;
     }
@@ -53,14 +63,11 @@ class Controller
     }
 
     /**
-     * @param $param
-     * @param $message
+     * @param array $session
      */
-    public function flash($param, $message)
+    public function flash(array $session)
     {
-        $_SESSION['flash'] = [
-            $param => $message
-        ];
+        $_SESSION['flash'] = $session;
     }
 
     /**

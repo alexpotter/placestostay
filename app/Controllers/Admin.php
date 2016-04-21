@@ -28,7 +28,14 @@ class Admin extends Controller
      */
     public function login()
     {
-        return $this->view('admin/index');
+        if(isset($_SESSION['admin']))
+        {
+            return $this->view('admin');
+        }
+        else
+        {
+            return $this->view('admin/index');
+        }
     }
 
     /**
@@ -39,8 +46,19 @@ class Admin extends Controller
     {
         $user = new User();
         $admin = $user->authenticate($email, $password);
-        $admin ? $_SESSION['admin'] = $admin : $this->flash('error', 'Incorrect username password');
-        return $this->redirect('admin');
+        if($admin)
+        {
+            $_SESSION['admin'] = $admin;
+            return $this->redirect('admin');
+        }
+        else
+        {
+            $this->flash([
+                'error' => 'Incorrect username password',
+                'email' => $email,
+            ]);
+            return $this->redirect('admin/login');
+        }
     }
 
     public function logout()
@@ -51,7 +69,7 @@ class Admin extends Controller
 
     public function dashboard()
     {
-
+        return $this->view('admin/dashboard');
     }
 
     public function addLocationForm()
