@@ -30,7 +30,8 @@ class BaseModel
 
             $count = 1;
 
-            foreach ($params as $param) {
+            foreach ($params as $param)
+            {
                 $query->bindParam($count, $param);
                 $count++;
             }
@@ -61,7 +62,8 @@ class BaseModel
 
             $count = 1;
 
-            foreach ($params as $param) {
+            foreach ($params as $param)
+            {
                 $query->bindParam($count, $param);
                 $count++;
             }
@@ -78,9 +80,35 @@ class BaseModel
         }
     }
 
-    public function insert()
+    public function insert(array $columns, array $params)
     {
+        $columnsForSql = implode(', ', $columns);
+        $bindsForSql = '?';
 
+        if (count($params) >= 1)
+        {
+            for($count = 1; $count < sizeof($columns); $count ++)
+            {
+                $bindsForSql = $bindsForSql . ', ?';
+            }
+        }
+
+        $query = $this->db->prepare("INSERT INTO $this->table ($columnsForSql) VALUES ($bindsForSql);");
+
+        $count = 1;
+
+        foreach($params as $param)
+        {
+            $query->bindParam($count, $param);
+            $count++;
+        }
+
+        echo '<pre>';
+        $query->debugDumpParams();
+        print_r($params);
+        //die;
+
+        $query->execute();
     }
 
     public function update()

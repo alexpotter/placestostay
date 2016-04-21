@@ -29,4 +29,13 @@ class User extends BaseModel
     {
 
     }
+
+    public function create($firstName, $lastName, $email, $password, $userType)
+    {
+        $options = [
+            'cost' => 12,
+        ];
+
+        $this->insert(['firstName', 'lastName', 'email', 'password', 'user_type'], [$firstName, $lastName, $email, password_hash($password, PASSWORD_BCRYPT, $options), $userType]);
+    }
 }

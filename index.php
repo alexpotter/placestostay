@@ -15,6 +15,7 @@ use app\Config;
 use app\http\Request;
 
 $app = new Config();
+$app->boot();
 $request = new Request($app);
 
 $request->makeResponse();
