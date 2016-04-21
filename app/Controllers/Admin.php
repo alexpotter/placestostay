@@ -2,6 +2,9 @@
 
 namespace app\Controllers;
 
+use app\User;
+use Exception;
+
 class Admin extends Controller
 {
     public function __construct()
@@ -29,11 +32,22 @@ class Admin extends Controller
         return $this->view('admin/index');
     }
 
+    /**
+     * @param $username
+     * @param $password
+     */
     public function postLogin($username, $password)
     {
-        echo $username;
-        echo '<br>';
-        echo $password;
+        $user = new User();
+        echo '<pre>';
+        try
+        {
+            print_r($user->getUserByUsername($username));
+        }
+        catch (Exception $e)
+        {
+            print_r($e);
+        }
     }
 
     public function dashboard()

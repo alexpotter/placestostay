@@ -23,4 +23,9 @@ class ConfigExample {
     {
         return self::$url.'/'.$route;
     }
+
+    public function db()
+    {
+        return $this->conn;
+    }
 }

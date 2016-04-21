@@ -8,6 +8,8 @@ include('app/Controllers/Controller.php');
 include('app/Controllers/Api.php');
 include('app/Controllers/PlacesToStay.php');
 include('app/Controllers/Admin.php');
+include('app/Models/BaseModel.php');
+include('app/Models/User.php');
 
 use app\Config;
 use app\http\Request;
