@@ -3,7 +3,6 @@
 namespace app\Controllers;
 
 use app\User;
-use Exception;
 
 class Admin extends Controller
 {
@@ -33,21 +32,22 @@ class Admin extends Controller
     }
 
     /**
-     * @param $username
+     * @param $email
      * @param $password
      */
-    public function postLogin($username, $password)
+    public function postLogin($email, $password)
     {
         $user = new User();
-        echo '<pre>';
-        try
-        {
-            print_r($user->getUserByUsername($username));
-        }
-        catch (Exception $e)
-        {
-            print_r($e);
-        }
+        $admin = $user->authenticate($email, $password);
+        if ($admin) $_SESSION['admin'] = $admin;
+
+        return $this->redirect('admin');
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        return $this->redirect('admin');
     }
 
     public function dashboard()

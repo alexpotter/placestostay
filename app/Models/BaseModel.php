@@ -2,8 +2,7 @@
 
 namespace app;
 
-
-use PDOException;
+use Exception;
 
 class BaseModel
 {
@@ -20,29 +19,22 @@ class BaseModel
      * @param array $columns
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function get(array $columns, array $params)
     {
-        $columnsForSql = implode(' = ?, ', $columns).' = ?';
+        $columnsForSql = implode(' = ? AND ', $columns).' = ?';
 
         try {
             $query = $this->db->prepare("SELECT * FROM $this->table WHERE ($columnsForSql)");
 
-            $count = 1;
-
-            foreach ($params as $param)
-            {
-                $query->bindParam($count, $param);
-                $count++;
-            }
-
-            $query->execute();
+            $query->execute($params);
 
             $rows = $query->fetchAll();
 
             return $rows;
         }
-        catch (PDOException $e)
+        catch (Exception $e)
         {
             throw $e;
         }
@@ -52,63 +44,55 @@ class BaseModel
      * @param array $columns
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function getFirst(array $columns, array $params)
     {
-        $columnsForSql = implode(' = ?, ', $columns).' = ?';
+        $columnsForSql = implode(' = ? AND ', $columns).' = ?';
 
         try {
             $query = $this->db->prepare("SELECT * FROM $this->table WHERE ($columnsForSql)");
 
-            $count = 1;
+            $query->execute($params);
 
-            foreach ($params as $param)
-            {
-                $query->bindParam($count, $param);
-                $count++;
-            }
+            $row = $query->fetch();
 
-            $query->execute();
-
-            $rows = $query->fetch();
-
-            return $rows;
+            return $row;
         }
-        catch (PDOException $e)
+        catch (Exception $e)
         {
             throw $e;
         }
     }
 
+    /**
+     * @param array $columns
+     * @param array $params
+     * @return bool
+     * @throws Exception
+     */
     public function insert(array $columns, array $params)
     {
-        $columnsForSql = implode(', ', $columns);
-        $bindsForSql = '?';
+        try {
+            $columnsForSql = implode(', ', $columns);
+            $bindsForSql = '?';
 
-        if (count($params) >= 1)
-        {
-            for($count = 1; $count < sizeof($columns); $count ++)
-            {
-                $bindsForSql = $bindsForSql . ', ?';
+            if (count($params) >= 1) {
+                for ($count = 1; $count < sizeof($columns); $count++) {
+                    $bindsForSql = $bindsForSql . ', ?';
+                }
             }
+
+            $query = $this->db->prepare("INSERT INTO $this->table ($columnsForSql) VALUES ($bindsForSql);");
+
+            $query->execute($params);
         }
-
-        $query = $this->db->prepare("INSERT INTO $this->table ($columnsForSql) VALUES ($bindsForSql);");
-
-        $count = 1;
-
-        foreach($params as $param)
+        catch (Exception $e)
         {
-            $query->bindParam($count, $param);
-            $count++;
+            throw $e;
         }
 
-        echo '<pre>';
-        $query->debugDumpParams();
-        print_r($params);
-        //die;
-
-        $query->execute();
+        return true;
     }
 
     public function update()

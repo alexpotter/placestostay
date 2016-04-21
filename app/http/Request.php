@@ -103,6 +103,9 @@ class Request
                 case 'add-room':
                     $this->admin = new Admin();
                     return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom();
+                case 'logout':
+                    $this->admin = new Admin();
+                    $this->admin->logout();
             }
         }
         else

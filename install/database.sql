@@ -7,12 +7,13 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
   ID          int NOT NULL AUTO_INCREMENT,
-  firstName   varchar (255),
-  lastName    varchar (255),
+  first_name  varchar (255),
+  last_name   varchar (255),
   email       varchar (255),
   password    varchar (255),
   user_type   int,
-  PRIMARY KEY (ID)
+  PRIMARY KEY (ID),
+  UNIQUE (email)
 );
 
 CREATE TABLE locations
@@ -60,5 +61,6 @@ CREATE TABLE api
   api_key       VARCHAR (15),
   user_id       int,
   PRIMARY KEY (ID),
-  FOREIGN KEY (user_id) REFERENCES users(ID)
+  FOREIGN KEY (user_id) REFERENCES users(ID),
+  UNIQUE (api_key)
 );

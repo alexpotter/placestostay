@@ -2,6 +2,7 @@
 
 namespace app;
 
+use Exception;
 use PDO;
 
 class ConfigExample {
@@ -17,19 +18,29 @@ class ConfigExample {
     {
         self::$url = $_SERVER['SERVER_NAME'];
         $this->conn = new PDO("mysql:host=$this->dbHost;dbname=$this->dbName", $this->dbUsername, $this->dbPassword);
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function boot()
     {
-        if(! $this->conn->query('DESCRIBE users'))
-        {
-            $query = file_get_contents('./install/database.sql');
-            $statement = $this->conn->prepare($query);
-            $statement->execute();
+        try {
+            $this->conn->query('SELECT * FROM users');
         }
+        catch (Exception $e)
+        {
+            try {
+                $query = file_get_contents('./install/database.sql');
+                $statement = $this->conn->prepare($query);
+                $statement->execute();
 
-        $admin = new User();
-        $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
+                $admin = new User();
+                $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
+            }
+            catch (Exception $e)
+            {
+
+            }
+        }
     }
 
     public function url($route = null)
