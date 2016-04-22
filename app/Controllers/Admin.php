@@ -74,7 +74,7 @@ class Admin extends Controller
 
     public function addLocationForm()
     {
-
+        return $this->view('admin/location');
     }
 
     public function addRoomForm()
