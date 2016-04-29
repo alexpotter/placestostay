@@ -48,6 +48,7 @@ class Admin extends Controller
     {
         $user = new User();
         $admin = $user->authenticate($email, $password);
+
         if($admin)
         {
             $_SESSION['admin'] = $admin;

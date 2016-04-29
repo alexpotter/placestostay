@@ -32,7 +32,9 @@ class User extends BaseModel
     {
         try
         {
-            $user = $this->getFirst(['email'], [$email]);
+            $user = $this->getFirst([
+                'email' => $email,
+            ]);
             $this->set($user['first_name'], $user['last_name'], $user['email']);
             return $this;
         }
@@ -52,7 +54,10 @@ class User extends BaseModel
     {
         try
         {
-            $user = $this->getFirst(['email'], [$email]);
+            $user = $this->getFirst([
+                'email' => $email,
+            ]);
+
             if($user['user_type'] == 1 && password_verify($password, $user['password']))
             {
                 $this->set($user['first_name'], $user['last_name'], $user['email']);

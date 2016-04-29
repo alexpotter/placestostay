@@ -17,13 +17,21 @@ class BaseModel
     }
 
     /**
-     * @param array $columns
-     * @param array $params
+     * @param array $binds
      * @return array
      * @throws Exception
      */
-    public function get(array $columns, array $params)
+    public function get(array $binds)
     {
+        $columns = [];
+        $params = [];
+
+        foreach ($binds as $key => $param)
+        {
+            $columns[] = $key;
+            $params[] = $param;
+        }
+
         $columnsForSql = implode(' = ? AND ', $columns).' = ?';
 
         try {
@@ -42,13 +50,21 @@ class BaseModel
     }
 
     /**
-     * @param array $columns
-     * @param array $params
+     * @param array $binds
      * @return array
      * @throws Exception
      */
-    public function getFirst(array $columns, array $params)
+    public function getFirst(array $binds)
     {
+        $columns = [];
+        $params = [];
+
+        foreach ($binds as $key => $param)
+        {
+            $columns[] = $key;
+            $params[] = $param;
+        }
+
         $columnsForSql = implode(' = ? AND ', $columns).' = ?';
 
         try {
