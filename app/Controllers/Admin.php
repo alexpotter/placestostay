@@ -2,7 +2,8 @@
 
 namespace app\Controllers;
 
-use app\User;
+use app\Models\Location;
+use app\Models\User;
 
 class Admin extends Controller
 {
@@ -82,9 +83,11 @@ class Admin extends Controller
 
     }
 
-    public function addLocation()
+    public function addLocation($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng)
     {
-
+        $location = new Location();
+        $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng);
+        echo 'Added new location';
     }
 
     public function addRoom()

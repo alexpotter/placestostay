@@ -99,7 +99,17 @@ class Request
                     return $this->admin->dashboard();
                 case 'add-location':
                     $this->admin = new Admin();
-                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addLocationForm() : $this->admin->addLocation();
+                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addLocationForm() : $this->admin->addLocation(
+                        $_POST['name'],
+                        $_POST['streetNumber'],
+                        $_POST['addressLine1'],
+                        $_POST['town'],
+                        $_POST['postcode'],
+                        $_POST['country'],
+                        $_POST['google_id'],
+                        $_POST['lat'],
+                        $_POST['long']
+                    );
                 case 'add-room':
                     $this->admin = new Admin();
                     return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom();

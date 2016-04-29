@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\Models\User;
 use Exception;
 use PDO;
 

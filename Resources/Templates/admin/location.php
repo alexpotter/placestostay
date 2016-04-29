@@ -86,12 +86,8 @@
             marker.setVisible(false);
             var place = autocomplete.getPlace();
 
-            // This is what needs to be sent to DB
-            // This is what will need to reach an AJAX request somehow
-            // List details in div
-            console.log(place);
-            // place.place_id
-            $('#details').html('Got info');
+            // DO RESPONSE
+            displayResponse(place);
 
             if (!place.geometry) {
                 window.alert("Autocomplete's returned place contains no geometry");
@@ -127,6 +123,55 @@
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
             infowindow.open(map, marker);
         });
+    }
+
+    function displayResponse(place) {
+
+        var components= {};
+
+        $.each(place.address_components, function(key, value) {
+            $.each(value.types, function(key2, value2) {
+                components[value2] = value.long_name
+            });
+        });
+
+        var street_number = (typeof components.street_number !== 'undefined') ? components.street_number : '';
+        var addressLine1 = (typeof components.route !== 'undefined') ? components.route : '';
+        var town = (typeof components.postal_town !== 'undefined') ? components.postal_town : '';
+        var postcode = (typeof components.postal_code !== 'undefined') ? components.postal_code : '';
+        var country = (typeof components.country !== 'undefined') ? components.country : '';
+        var url = '<?php echo $this->url('admin/add-location'); ?>';
+
+        $('#details').html('\
+            <div class="col-sm-10 col-sm-offset-1">\
+                <form action="' + url + '" method="post">\
+                    <input type="hidden" name="google_id" value="' + place.place_id + '">\
+                    <input type="hidden" name="lat" value="' + place.geometry.location.lat() + '">\
+                    <input type="hidden" name="long" value="' + place.geometry.location.lng() + '">\
+                    <div class="form-group">\
+                        <input type="text" name="name" class="form-control" placeholder="Name" value="' + place.name + '">\
+                    </div>\
+                    <div class="form-group">\
+                        <input type="text" name="streetNumber" class="form-control" placeholder="Street Number" value="' + street_number + '">\
+                    </div>\
+                    <div class="form-group"> \
+                        <input type="text" name="addressLine1" class="form-control" placeholder="Address Line 1" value="' + addressLine1 + '">\
+                    </div>\
+                    <div class="form-group"> \
+                        <input type="text" name="town" class="form-control" placeholder="Town" value="' + town + '">\
+                    </div>\
+                    <div class="form-group"> \
+                        <input type="text" name="postcode" class="form-control" placeholder="Postcode" value="' + postcode + '">\
+                    </div>\
+                    <div class="form-group"> \
+                        <input type="text" name="country" class="form-control" placeholder="Country" value="' + country + '">\
+                    </div>\
+                    <div class="form-group">\
+                        <button type="submit" class="btn btn-lg btn-success">Submit</button> \
+                    </div>\
+                </form>\
+            </div>\
+        ');
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuK5rdDsSZpXyi5VBjW7g8N1IJUtAXZwA&libraries=places&callback=initMap"

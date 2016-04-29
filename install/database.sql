@@ -18,14 +18,17 @@ CREATE TABLE users
 
 CREATE TABLE locations
 (
-  ID          int NOT NULL AUTO_INCREMENT,
-  name        VARCHAR (255),
-  latritude   VARCHAR (255),
-  longitude   VARCHAR (255),
-  google_id   VARCHAR (255),
-  city        VARCHAR (255),
-  county      VARCHAR (255),
-  belongs_to  int,
+  ID              int NOT NULL AUTO_INCREMENT,
+  name            VARCHAR (255),
+  lat             VARCHAR (255),
+  lng             VARCHAR (255),
+  google_id       VARCHAR (255),
+  street_number   int,
+  address_line1   VARCHAR (255),
+  town            VARCHAR (255),
+  postcode        VARCHAR (255),
+  country         VARCHAR (255),
+  belongs_to      int,
   PRIMARY KEY (ID),
   FOREIGN KEY (belongs_to) REFERENCES users(ID)
 );

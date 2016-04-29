@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace app\Models;
 
 use Exception;
 
@@ -84,17 +84,11 @@ class User extends BaseModel
         ];
 
         $this->insert([
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-            'user_type'
-        ], [
-            $firstName,
-            $lastName,
-            $email,
-            password_hash($password, PASSWORD_BCRYPT, $options),
-            $userType
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_BCRYPT, $options),
+            'user_type' => $userType,
         ]);
     }
 }

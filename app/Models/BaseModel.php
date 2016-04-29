@@ -1,7 +1,8 @@
 <?php
 
-namespace app;
+namespace app\Models;
 
+use app\Config;
 use Exception;
 
 class BaseModel
@@ -66,13 +67,21 @@ class BaseModel
     }
 
     /**
-     * @param array $columns
-     * @param array $params
+     * @param array $binds
      * @return bool
      * @throws Exception
      */
-    public function insert(array $columns, array $params)
+    public function insert(array $binds)
     {
+        $columns = [];
+        $params = [];
+
+        foreach ($binds as $key => $param)
+        {
+            $columns[] = $key;
+            $params[] = $param;
+        }
+
         try {
             $columnsForSql = implode(', ', $columns);
             $bindsForSql = '?';

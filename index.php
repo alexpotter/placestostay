@@ -10,6 +10,7 @@ include('app/Controllers/PlacesToStay.php');
 include('app/Controllers/Admin.php');
 include('app/Models/BaseModel.php');
 include('app/Models/User.php');
+include('app/Models/Location.php');
 
 use app\Config;
 use app\http\Request;
