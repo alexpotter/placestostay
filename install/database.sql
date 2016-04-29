@@ -30,7 +30,8 @@ CREATE TABLE locations
   country         VARCHAR (255),
   belongs_to      int,
   PRIMARY KEY (ID),
-  FOREIGN KEY (belongs_to) REFERENCES users(ID)
+  FOREIGN KEY (belongs_to) REFERENCES users(ID),
+  UNIQUE (google_id)
 );
 
 CREATE TABLE rooms

@@ -4,6 +4,7 @@ namespace app\Controllers;
 
 use app\Models\Location;
 use app\Models\User;
+use Exception;
 
 class Admin extends Controller
 {
@@ -83,10 +84,28 @@ class Admin extends Controller
 
     }
 
+    /**
+     * @param $name
+     * @param $streetNumber
+     * @param $addressLine1
+     * @param $town
+     * @param $postcode
+     * @param $country
+     * @param $googleId
+     * @param $lat
+     * @param $lng
+     */
     public function addLocation($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng)
     {
-        $location = new Location();
-        $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng);
+        try {
+            $location = new Location();
+            $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng);
+        }
+        catch (Exception $e) {
+            echo "Duplicate entry";
+            return;
+        }
+
         echo 'Added new location';
     }
 
