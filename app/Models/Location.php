@@ -45,4 +45,18 @@ class Location extends BaseModel
 
         return true;
     }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function all()
+    {
+        try {
+            return $this->getAll();
+        }
+        catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

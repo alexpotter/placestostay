@@ -110,6 +110,9 @@ class Request
                         $_POST['lat'],
                         $_POST['long']
                     );
+                case 'get-locations':
+                    $this->admin = new Admin();
+                    return $this->admin->getLocations();
                 case 'add-room':
                     $this->admin = new Admin();
                     return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom();

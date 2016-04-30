@@ -65,6 +65,11 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-12" id="listLocations">
+
+    </div>
+</div>
 <script>
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
@@ -180,6 +185,45 @@
         ');
     }
 
+    function displayLocations(locations)
+    {
+        var html  = '\
+            <h1 style="text-align: center">Current Locations</h1>\
+            <table class="table" style="margin-top: 20px;">\
+                <tr>\
+                    <th>Name</th>\
+                    <th>Street Number</th>\
+                    <th>Address Line 1</th>\
+                    <th>Town/City</th>\
+                    <th>Postcode</th>\
+                    <th>Country</th>\
+                </tr>\
+        ';
+
+        locations = $.parseJSON(locations);
+
+        $.each(locations, function(keys, params) {
+            $.each(params, function(key, param) {
+                var streetNumber = param.street_number == 0 ? '' : param.street_number;
+
+                html += '\
+                <tr>\
+                    <td>' + param.name + '</td>\
+                    <td>' + streetNumber + '</td>\
+                    <td>' + param.address_line1 + '</td>\
+                    <td>' + param.town + '</td>\
+                    <td>' + param.postcode + '</td>\
+                    <td>' + param.country + '</td>\
+                </tr>\
+            ';
+            });
+        });
+
+        html += '</table>';
+
+        $('#listLocations').html(html);
+    }
+
     $(function() {
         $('#details').on('submit', '#addLocation', function(e) {
             e.preventDefault();
@@ -195,6 +239,9 @@
                     $('#response').removeClass('alert-danger');
                 }
                 $('#response').addClass('alert-success').css('display', 'block').html(response.message);
+                $.get( "<?php echo $this->url('admin/get-locations'); ?>", function( locations ) {
+                    displayLocations(locations);
+                });
             })
             .fail(function(jqXHR, status, thrownError) {
                 var responseText = jQuery.parseJSON(jqXHR.responseText);
@@ -203,6 +250,10 @@
                 }
                 $('#response').addClass('alert-danger').css('display', 'block').html(responseText.message);
             });
+        });
+
+        $.get( "<?php echo $this->url('admin/get-locations'); ?>", function( locations ) {
+            displayLocations(locations);
         });
     });
 </script>

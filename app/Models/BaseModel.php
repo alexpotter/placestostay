@@ -16,6 +16,23 @@ class BaseModel
         $this->db = $app->db();
     }
 
+    public function getAll()
+    {
+        try {
+            $query = $this->db->prepare("SELECT * FROM $this->table");
+
+            $query->execute();
+
+            $rows = $query->fetchAll();
+
+            return $rows;
+        }
+        catch (Exception $e)
+        {
+            throw $e;
+        }
+    }
+
     /**
      * @param array $binds
      * @return array

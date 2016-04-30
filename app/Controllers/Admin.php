@@ -114,6 +114,22 @@ class Admin extends Controller
         ], 200);
     }
 
+    public function getLocations()
+    {
+        $location = new Location();
+        try {
+            return $this->returnJson([
+                'locations' => $location->all()
+            ], 200);
+        }
+        catch (Exception $e) {
+            return $this->returnJson([
+                'error' => $e->getMessage(),
+                'message' => 'Duplicate location entered.'
+            ], 400);
+        }
+    }
+
     public function addRoom()
     {
 
