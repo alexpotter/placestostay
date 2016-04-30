@@ -103,11 +103,15 @@ class Admin extends Controller
             $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng);
         }
         catch (Exception $e) {
-            echo "Duplicate entry";
-            return;
+            return $this->returnJson([
+                'error' => $e->getMessage(),
+                'message' => 'Duplicate location entered.'
+            ], 400);
         }
 
-        echo 'Added new location';
+        return $this->returnJson([
+            'message' => 'Sucessfully added new location.'
+        ], 200);
     }
 
     public function addRoom()

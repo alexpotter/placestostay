@@ -1,7 +1,7 @@
 <!html>
 <html>
 <head>
-    <title>Places to Stay</title>
+    <title>Places to Stay Admin</title>
     <!-- jQuery -->
     <script src="<?php echo $this->fileUrl('dist/js/jquery.min.js'); ?>"></script>
     <!-- Bootstrap -->
@@ -48,14 +48,20 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="col-md-8 col-md-offset-2" style="padding-top: 20px;">
-            <input class="form-control" type="text" name="location" id="location" type="text" placeholder="Enter a location" style="font-size: 22pt; height: 60px;">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" style="padding-top: 20px;">
+                <input class="form-control" type="text" name="location" id="location" type="text" placeholder="Enter a location" style="font-size: 22pt; height: 60px;">
+            </div>
         </div>
-        <form method="post" action="<?php echo $this->url('admin/add-location') ?>">
-            <!-- Populate dynamically -->
-        </form>
-        <div id="details" style="clear: both; padding-top: 20px;">
+        <div class="row">
+            <div id="response" class="col-xs-10 col-xs-offset-1" style="margin-top: 20px; padding: 10px; display: none;">
 
+            </div>
+        </div>
+        <div class="row">
+            <div id="details" style="clear: both; padding-top: 20px;">
+
+            </div>
         </div>
     </div>
 </div>
@@ -144,7 +150,7 @@
 
         $('#details').html('\
             <div class="col-sm-10 col-sm-offset-1">\
-                <form action="' + url + '" method="post">\
+                <form action="' + url + '" method="post" id="addLocation">\
                     <input type="hidden" name="google_id" value="' + place.place_id + '">\
                     <input type="hidden" name="lat" value="' + place.geometry.location.lat() + '">\
                     <input type="hidden" name="long" value="' + place.geometry.location.lng() + '">\
@@ -173,6 +179,32 @@
             </div>\
         ');
     }
+
+    $(function() {
+        $('#details').on('submit', '#addLocation', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $( this ).prop( 'action' ),
+                type: 'post',
+                dataType: 'json',
+                data: $( this).serialize()
+            })
+            .done(function(response) {
+                if ($('#response').hasClass('alert-danger')) {
+                    $('#response').removeClass('alert-danger');
+                }
+                $('#response').addClass('alert-success').css('display', 'block').html(response.message);
+            })
+            .fail(function(jqXHR, status, thrownError) {
+                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                if ($('#response').hasClass('alert-success')) {
+                    $('#response').removeClass('alert-success');
+                }
+                $('#response').addClass('alert-danger').css('display', 'block').html(responseText.message);
+            });
+        });
+    });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuK5rdDsSZpXyi5VBjW7g8N1IJUtAXZwA&libraries=places&callback=initMap"
         async defer></script>
