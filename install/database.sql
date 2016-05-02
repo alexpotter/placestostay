@@ -40,9 +40,7 @@ CREATE TABLE rooms
   ID              int NOT NULL AUTO_INCREMENT,
   location_id     int,
   number_of_beds  int,
-  date            TIMESTAMP,
   price           int,
-  booked          SMALLINT,
   PRIMARY KEY (ID),
   FOREIGN KEY (location_id) REFERENCES locations(ID)
 );
