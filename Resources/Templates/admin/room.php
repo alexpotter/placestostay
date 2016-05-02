@@ -83,7 +83,7 @@
             <div class="form-group">
                 <div class="col-md-12" style="margin-top: 20px;">
                     <input class="btn btn-success btn-lg" type="submit" value="Add Room">
-                </div>a
+                </div>
             </div>
         </form>
     </div>
