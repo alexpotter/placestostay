@@ -11,6 +11,7 @@ include('app/Controllers/Admin.php');
 include('app/Models/BaseModel.php');
 include('app/Models/User.php');
 include('app/Models/Location.php');
+include('app/Models/Room.php');
 
 use app\Config;
 use app\http\Request;

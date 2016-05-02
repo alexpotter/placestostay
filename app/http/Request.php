@@ -116,7 +116,14 @@ class Request
                     return $this->admin->getLocations();
                 case 'add-room':
                     $this->admin = new Admin();
-                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom();
+                    return ($_SERVER['REQUEST_METHOD'] == 'GET') ? $this->admin->addRoomForm() : $this->admin->addRoom(
+                        $_POST['location'],
+                        $_POST['description'],
+                        $_POST['number_of_beds'],
+                        $_POST['price'],
+                        $_POST['available_from'],
+                        $_POST['available_to']
+                    );
                 case 'logout':
                     $this->admin = new Admin();
                     $this->admin->logout();

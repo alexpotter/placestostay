@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\Location;
+use app\Models\Room;
 use app\Models\User;
 use Exception;
 
@@ -122,7 +123,7 @@ class Admin extends Controller
         }
 
         return $this->returnJson([
-            'message' => 'Sucessfully added new location.'
+            'message' => 'Successfully added new location.'
         ], 200);
     }
 
@@ -142,8 +143,41 @@ class Admin extends Controller
         }
     }
 
-    public function addRoom()
+    /**
+     * @param $locationID
+     * @param $description
+     * @param $numberOfBeds
+     * @param $price
+     * @param $available_from
+     * @param $available_to
+     */
+    public function addRoom($locationID, $description, $numberOfBeds, $price, $available_from, $available_to)
     {
+        if (! $numberOfBeds)
+        {
+            return $this->returnJson([
+                'message' => 'Number of beds required'
+            ], 400);
+        }
 
+        $room = new Room();
+        $fromArray = explode('/', $available_from);
+        $dateFrom = $fromArray[2].'-'.$fromArray[0].'-'.$fromArray[1];
+
+        $toArray = explode('/', $available_from);
+        $dateTo = $toArray[2].'-'.$toArray[0].'-'.$toArray[1];
+        
+        try {
+            $room->add($locationID, $numberOfBeds, $description, $price * 100, $dateFrom, $dateTo);
+            return $this->returnJson([
+                'message' => 'Successfully added new room.'
+            ], 200);
+        }
+        catch (Exception $e) {
+            return $this->returnJson([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong'
+            ], 400);
+        }
     }
 }

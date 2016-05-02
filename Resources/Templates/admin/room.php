@@ -53,28 +53,43 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="row">
+    <div id="response" class="col-xs-10 col-xs-offset-1" style="margin-top: 20px; padding: 10px; display: none;">
+
+    </div>
+</div>
+<div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <form method="post" about="<?php echo $this->url('admin/add-room'); ?>">
-            <div class="col-xs-6">
+        <form method="post" about="<?php echo $this->url('admin/add-room'); ?>" id="newRoom">
+            <div class="col-sm-4">
                 <div class="form-group">
-                    <select name="locations" class="form-control">
+                    <select name="location" class="form-control">
                         <?php foreach ($locations as $location): ?>
-                            <option value="<?php echo $location['id']; ?>"><?php echo $location['name']; ?></option>
+                            <option value="<?php echo $location['ID']; ?>"><?php echo $location['name']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <input class="form-control" name="description" placeholder="Description">
                 </div>
             </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <select name="number_of_beds" class="form-control">
+                        <option value="0">Number of beds</option>
+                        <?php for($count = 1; $count < 5; $count ++): ?>
+                            <option value="<?php echo $count; ?>"><?php echo $count; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-4">
-                    <input class="form-control" type="text" id="dateFrom" placeholder="Date To">
+                    <input name="available_to" class="form-control" type="text" id="dateFrom" placeholder="Date To">
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="dateTo" placeholder="Date From">
+                    <input name="available_from" type="text" class="form-control" id="dateTo" placeholder="Date From">
                 </div>
                 <div class="col-md-4">
                     <input type="number" name="price" class="form-control" placeholder="Price per night">
@@ -88,5 +103,34 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(function() {
+        $('#newRoom').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                    url: $( this ).prop( 'action' ),
+                    type: 'post',
+                    dataType: 'json',
+                    data: $( this).serialize()
+                })
+                .done(function(response) {
+                    $('#response').show().html('\
+                        <div class="alert alert-success">' + response + '</div>\
+                    ');
+                })
+                .fail(function(jqXHR, status, thrownError) {
+                    var responseText = jQuery.parseJSON(jqXHR.responseText);
+                    $('#response').show().html('\
+                        <div class="alert alert-danger">' + responseText.message + '</div>\
+                    ');
+                });
+        });
+
+        $.get( "<?php echo $this->url('admin/get-locations'); ?>", function( locations ) {
+            displayLocations(locations);
+        });
+    });
+</script>
 </body>
 </html>
