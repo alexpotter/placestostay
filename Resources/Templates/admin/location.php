@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Places to Stay Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- jQuery -->
     <script src="<?php echo $this->fileUrl('dist/js/jquery.min.js'); ?>"></script>
     <!-- Bootstrap -->
