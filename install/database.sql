@@ -38,6 +38,7 @@ CREATE TABLE locations
 CREATE TABLE rooms
 (
   ID              int NOT NULL AUTO_INCREMENT,
+  description     VARCHAR (255),
   location_id     int,
   number_of_beds  int,
   price           int,
