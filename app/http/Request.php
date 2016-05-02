@@ -108,7 +108,8 @@ class Request
                         $_POST['country'],
                         $_POST['google_id'],
                         $_POST['lat'],
-                        $_POST['long']
+                        $_POST['long'],
+                        $_POST['location_type']
                     );
                 case 'get-locations':
                     $this->admin = new Admin();

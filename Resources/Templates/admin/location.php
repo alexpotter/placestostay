@@ -178,7 +178,15 @@
                         <input type="text" name="country" class="form-control" placeholder="Country" value="' + country + '">\
                     </div>\
                     <div class="form-group">\
-                        <button type="submit" class="btn btn-lg btn-success">Submit</button> \
+                        <select name="location_type" class="form-control">\
+                            <option value="0">Location Type</option>\
+                            <option value="Hostel">Hostel</option>\
+                            <option value="Hotel">Hotel</option>\
+                            <option value="Bed and Breakfast">Bed and Breakfast</option>\
+                        </select>\
+                    </div>\
+                    <div class="form-group">\
+                        <button type="submit" class="btn btn-lg btn-success">Submit</button>\
                     </div>\
                 </form>\
             </div>\
@@ -197,6 +205,7 @@
                     <th>Town/City</th>\
                     <th>Postcode</th>\
                     <th>Country</th>\
+                    <th>Location Type</th>\
                 </tr>\
         ';
 
@@ -214,6 +223,7 @@
                     <td>' + param.town + '</td>\
                     <td>' + param.postcode + '</td>\
                     <td>' + param.country + '</td>\
+                    <td>' + param.location_type + '</td>\
                 </tr>\
             ';
             });

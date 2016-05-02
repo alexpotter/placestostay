@@ -20,10 +20,11 @@ class Location extends BaseModel
      * @param $googleId
      * @param $lat
      * @param $lng
+     * @param $type
      * @return bool
      * @throws Exception
      */
-    public function add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng)
+    public function add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng, $type)
     {
         try {
             $this->insert([
@@ -31,12 +32,13 @@ class Location extends BaseModel
                 'lat' => $lat,
                 'lng' => $lng,
                 'google_id' => $googleId,
-                'street_number' => $streetNumber,
+                'street_number' => $streetNumber ?: 0,
                 'address_line1' => $addressLine1,
                 'town' => $town,
                 'postcode' => $postcode,
                 'country' => $country,
-                'belongs_to' => $_SESSION['admin']['ID']
+                'belongs_to' => $_SESSION['admin']['ID'],
+                'location_type' => $type
             ]);
         }
         catch (Exception $e) {

@@ -95,12 +95,20 @@ class Admin extends Controller
      * @param $googleId
      * @param $lat
      * @param $lng
+     * @param $location_type
      */
-    public function addLocation($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng)
+    public function addLocation($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng, $location_type)
     {
+        if (!$location_type)
+        {
+            return $this->returnJson([
+                'message' => 'Location type is required'
+            ], 400);
+        }
+
         try {
             $location = new Location();
-            $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng);
+            $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng, $location_type);
         }
         catch (Exception $e) {
             return $this->returnJson([
