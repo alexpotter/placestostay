@@ -77,7 +77,7 @@
                     <input type="text" class="form-control" id="dateTo" placeholder="Date From">
                 </div>
                 <div class="col-md-4">
-                    <input type="number" name="price" class="form-control" placeholder="Price">
+                    <input type="number" name="price" class="form-control" placeholder="Price per night">
                 </div>
             </div>
             <div class="form-group">
