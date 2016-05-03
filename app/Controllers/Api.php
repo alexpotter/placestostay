@@ -1,9 +1,13 @@
 <?php
 
 namespace app\Controllers;
+use app\Models\Api as ApiModel;
 
 class Api extends Controller
 {
+    /**
+     * @param $params
+     */
     public function search($params)
     {
         $this->returnJson(['search' => $params], 200);
@@ -41,5 +45,26 @@ class Api extends Controller
             'reason' => $reason,
             'responseCode' => $responseCode
         ], $responseCode);
+    }
+
+    /**
+     * @param $error
+     * @param $reason
+     * @param $code
+     */
+    public function returnApiError($error, $reason, $code)
+    {
+        return $this->returnJson([
+            'error' => $error,
+            'reason' => $reason,
+            'error_code' => $code,
+        ], $code);
+    }
+    
+    public function authenticate($key)
+    {
+        $api = new ApiModel();
+        
+        return sizeof($api->authenticateKey($key)) == 0 ? false : true;
     }
 }

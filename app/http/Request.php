@@ -67,8 +67,16 @@ class Request
         if ($this->isApi)
         {
             $this->api = new Api();
-            // Check API key here
-            // return error if bad key
+
+            if (! isset($_GET['api_key']))
+            {
+                return $this->api->returnApiError('Access Denied', 'API Key required', 403);
+            }
+
+            if (! $this->api->authenticate($_GET['api_key']))
+            {
+                return $this->api->returnApiError('Access Denied', 'API Key is not recognised', 403);
+            }
             
             switch ($this->route) {
                 case 'search':
