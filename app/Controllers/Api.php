@@ -3,6 +3,7 @@
 namespace app\Controllers;
 use app\Models\Api as ApiModel;
 use app\Models\Locations;
+use Exception;
 
 class Api extends Controller
 {
@@ -15,7 +16,15 @@ class Api extends Controller
     {
         $locationsModel = new Locations();
 
-        $locations = $locationsModel->getLocationsAndRoomsByTown($town, $from, $to);
+        try {
+            $locations = $locationsModel->getLocationsAndRoomsByTown($town, $from, $to);
+        }
+        catch (Exception $e) {
+            return $this->returnJson([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong',
+            ], 400);
+        }
 
         if (empty($locations))
         {
@@ -78,7 +87,7 @@ class Api extends Controller
     /**
      * @param $key
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function authenticate($key)
     {

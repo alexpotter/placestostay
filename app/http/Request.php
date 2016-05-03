@@ -80,9 +80,9 @@ class Request
             
             switch ($this->route) {
                 case 'search':
-                    if (! isset($this->variables[1]) || ! isset($this->variables[2]))
+                    if (! isset($this->variables[0]) || ! isset($this->variables[1]) || ! isset($this->variables[2]))
                     {
-                        return $this->api->returnApiError('Bad request', 'Dates are required', 400);
+                        return $this->api->returnApiError('Bad request', 'Town and dates are required', 400);
                     }
                     return $this->api->search($this->variables[0], $this->variables[1], $this->variables[2]);
                 case 'book':

@@ -36,12 +36,12 @@
             </div>
         </div>
         <div class="col-xs-6">
-            <form class="form-horizontal" id="searchPlace">
+            <form class="form-horizontal" id="searchPlace" method="post" action="<?php echo $this->url('api/search'); ?>">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-group">
                         <div class="col-xs-12">
                             <h2 style="text-align: center;">Search a place:</h2>
-                            <input type="text" name="location" class="form-control" style="font-size: 22pt; height: 60px;" placeholder="Location">
+                            <input type="text" name="location" id="town" class="form-control" style="font-size: 22pt; height: 60px;" placeholder="Location">
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,6 +57,10 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
             <div id="results">
 
             </div>

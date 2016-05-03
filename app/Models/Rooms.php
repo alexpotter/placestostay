@@ -73,18 +73,23 @@ class Rooms extends BaseModel
 
             foreach($bookings as $booking)
             {
-                $bookFrom = new DateTime($from);
-                $bookTo = new DateTime($to);
+                try {
+                    $bookFrom = new DateTime($from);
+                    $bookTo = new DateTime($to);
 
-                $bookedFrom = new DateTime($booking->date_from);
-                $bookedTo = new DateTime($booking->date_to);
+                    $bookedFrom = new DateTime($booking->date_from);
+                    $bookedTo = new DateTime($booking->date_to);
 
-                if (($bookFrom >= $bookedFrom && $bookFrom <= $bookedTo) || ($bookTo >= $bookedFrom && $bookTo <= $bookedTo))
-                {
-                    $room->bookedDates[] = [
-                        'start' => $booking->date_from,
-                        'end' => $booking->date_to,
-                    ];
+                    if (($bookFrom <= $bookedTo) && ($bookedFrom <= $bookTo))
+                    {
+                        $room->bookedDates[] = [
+                            'start' => $booking->date_from,
+                            'end' => $booking->date_to,
+                        ];
+                    }
+                }
+                catch (Exception $e) {
+                    throw $e;
                 }
             }
         }

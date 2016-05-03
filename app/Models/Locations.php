@@ -71,26 +71,32 @@ class Locations extends BaseModel
     public function getLocationsAndRoomsByTown($town, $from, $to)
     {
         $returnArray = [];
+        
+        try {
 
-        $locations = $this->getWhereLike([
-            'town' => $town
-        ]);
+            $locations = $this->getWhereLike([
+                'town' => $town
+            ]);
 
-        foreach ($locations as $location)
-        {
-            $roomsModel = new Rooms();
-            $rooms = $roomsModel->getWithBookedDates($location->ID, $from, $to);
-
-            if ($rooms)
+            foreach ($locations as $location) 
             {
-                $location->rooms = [];
-                foreach ($rooms as $room)
-                {
-                    $location->rooms[] = $room;
-                }
-            }
+                $roomsModel = new Rooms();
+                $rooms = $roomsModel->getWithBookedDates($location->ID, $from, $to);
 
-            $returnArray[] = $location;
+                if ($rooms) 
+                {
+                    $location->rooms = [];
+                    foreach ($rooms as $room) 
+                    {
+                        $location->rooms[] = $room;
+                    }
+                }
+
+                $returnArray[] = $location;
+            }
+        }
+        catch (Exception $e) {
+            throw $e;
         }
 
         return $returnArray;
