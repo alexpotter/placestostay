@@ -3,11 +3,9 @@
 
 namespace app\Models;
 
-
-use ArrayObject;
 use Exception;
 
-class Location extends BaseModel
+class Locations extends BaseModel
 {
     protected $table = 'locations';
 
@@ -78,7 +76,7 @@ class Location extends BaseModel
 
         foreach ($locations as $location)
         {
-            $roomsModel = new Room();
+            $roomsModel = new Rooms();
             $rooms = $roomsModel->get([
                'location_id' => $location->ID,
             ]);

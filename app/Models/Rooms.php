@@ -4,7 +4,7 @@ namespace app\Models;
 
 use Exception;
 
-class Room extends BaseModel
+class Rooms extends BaseModel
 {
     protected $table = 'rooms';
 

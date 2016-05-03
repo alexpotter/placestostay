@@ -2,9 +2,9 @@
 
 namespace app\Controllers;
 
-use app\Models\Location;
-use app\Models\Room;
-use app\Models\User;
+use app\Models\Locations;
+use app\Models\Rooms;
+use app\Models\Users;
 use DateTime;
 use Exception;
 
@@ -48,7 +48,7 @@ class Admin extends Controller
      */
     public function postLogin($email, $password)
     {
-        $user = new User();
+        $user = new Users();
         $admin = $user->authenticate($email, $password);
 
         if($admin)
@@ -84,7 +84,7 @@ class Admin extends Controller
 
     public function addRoomForm()
     {
-        $locations = new Location();
+        $locations = new Locations();
         
         return $this->view('admin/room', [
             'locations' => $locations->all(),
@@ -113,7 +113,7 @@ class Admin extends Controller
         }
 
         try {
-            $location = new Location();
+            $location = new Locations();
             $location->add($name, $streetNumber, $addressLine1, $town, $postcode, $country, $googleId, $lat, $lng, $location_type);
         }
         catch (Exception $e) {
@@ -130,7 +130,7 @@ class Admin extends Controller
 
     public function getLocations()
     {
-        $location = new Location();
+        $location = new Locations();
         try {
             return $this->returnJson([
                 'locations' => $location->all()
@@ -161,7 +161,7 @@ class Admin extends Controller
             ], 400);
         }
 
-        $room = new Room();
+        $room = new Rooms();
 
         $dt = DateTime::createFromFormat('m/d/Y', $available_from);
         $dateFrom = $dt->format('Y-m-d');
@@ -188,7 +188,7 @@ class Admin extends Controller
      */
     public function getRooms()
     {
-        $rooms = new Room();
+        $rooms = new Rooms();
         try {
             return $this->returnJson([
                 'locations' => $rooms->all()

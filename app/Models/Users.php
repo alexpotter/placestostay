@@ -4,7 +4,7 @@ namespace app\Models;
 
 use Exception;
 
-class User extends BaseModel
+class Users extends BaseModel
 {
     protected $table = 'users';
     protected $firstName;

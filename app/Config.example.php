@@ -3,7 +3,7 @@
 namespace app;
 
 use app\Models\Api;
-use app\Models\User;
+use app\Models\Users;
 use Exception;
 use PDO;
 
@@ -35,7 +35,7 @@ class ConfigExample {
                 $statement = $this->conn->prepare($query);
                 $statement->execute();
 
-                $admin = new User();
+                $admin = new Users();
                 $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
 
                 $api = new Api();

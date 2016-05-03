@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 use app\Models\Api as ApiModel;
-use app\Models\Location;
+use app\Models\Locations;
 
 class Api extends Controller
 {
@@ -11,7 +11,7 @@ class Api extends Controller
      */
     public function search($town)
     {
-        $locationsModel = new Location();
+        $locationsModel = new Locations();
 
         $locations = $locationsModel->getLocationsAndRoomsByTown($town);
 
