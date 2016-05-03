@@ -8,12 +8,14 @@ class Api extends Controller
 {
     /**
      * @param $town
+     * @param $from
+     * @param $to
      */
-    public function search($town)
+    public function search($town, $from = null, $to = null)
     {
         $locationsModel = new Locations();
 
-        $locations = $locationsModel->getLocationsAndRoomsByTown($town);
+        $locations = $locationsModel->getLocationsAndRoomsByTown($town, $from, $to);
 
         if (empty($locations))
         {

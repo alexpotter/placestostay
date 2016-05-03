@@ -80,7 +80,11 @@ class Request
             
             switch ($this->route) {
                 case 'search':
-                    return $this->api->search($this->variables[0]);
+                    if (! isset($this->variables[1]) || ! isset($this->variables[2]))
+                    {
+                        return $this->api->returnApiError('Bad request', 'Dates are required', 400);
+                    }
+                    return $this->api->search($this->variables[0], $this->variables[1], $this->variables[2]);
                 case 'book':
                     // Make functional inputs $_POST
                     // i.e. $this->api->book($_POST['from']);

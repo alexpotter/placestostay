@@ -63,10 +63,12 @@ class Locations extends BaseModel
 
     /**
      * @param $town
+     * @param $from
+     * @param $to
      * @return array
      * @throws Exception
      */
-    public function getLocationsAndRoomsByTown($town)
+    public function getLocationsAndRoomsByTown($town, $from, $to)
     {
         $returnArray = [];
 
@@ -77,9 +79,7 @@ class Locations extends BaseModel
         foreach ($locations as $location)
         {
             $roomsModel = new Rooms();
-            $rooms = $roomsModel->getWithBookedDates([
-               'location_id' => $location->ID,
-            ]);
+            $rooms = $roomsModel->getWithBookedDates($location->ID, $from, $to);
 
             if ($rooms)
             {

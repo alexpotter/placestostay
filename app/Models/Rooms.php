@@ -2,6 +2,7 @@
 
 namespace app\Models;
 
+use DateTime;
 use Exception;
 
 class Rooms extends BaseModel
@@ -49,12 +50,19 @@ class Rooms extends BaseModel
     }
 
     /**
-     * @param array $binds
-     * @return array|mixed
+     * ONLY return booked dates between dates given otherwise array too large
+     *
+     * @param $locationId
+     * @param $to
+     * @param $from
+     * @return array
+     * @throws Exception
      */
-    public function getWithBookedDates(array $binds)
+    public function getWithBookedDates($locationId, $from, $to)
     {
-        $rooms = $this->get($binds);
+        $rooms = $this->get([
+            'location_id' => $locationId
+        ]);
 
         foreach ($rooms as $room)
         {
@@ -65,10 +73,19 @@ class Rooms extends BaseModel
 
             foreach($bookings as $booking)
             {
-                $room->bookedDates[] = [
-                    'start' => $booking->date_from,
-                    'end' => $booking->date_to,
-                ];
+                $bookFrom = new DateTime($from);
+                $bookTo = new DateTime($to);
+
+                $bookedFrom = new DateTime($booking->date_from);
+                $bookedTo = new DateTime($booking->date_to);
+
+                if (($bookFrom >= $bookedFrom && $bookFrom <= $bookedTo) || ($bookTo >= $bookedFrom && $bookTo <= $bookedTo))
+                {
+                    $room->bookedDates[] = [
+                        'start' => $booking->date_from,
+                        'end' => $booking->date_to,
+                    ];
+                }
             }
         }
         
