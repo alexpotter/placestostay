@@ -60,7 +60,7 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <form method="post" about="<?php echo $this->url('admin/add-room'); ?>" id="newRoom">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <select name="location" class="form-control">
                         <?php foreach ($locations as $location): ?>
@@ -69,12 +69,12 @@
                     </select>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <input class="form-control" name="description" placeholder="Description">
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <select name="number_of_beds" class="form-control">
                         <option value="0">Number of beds</option>
@@ -85,13 +85,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-4">
-                    <input name="available_to" class="form-control" type="text" id="dateFrom" placeholder="Date To">
-                </div>
-                <div class="col-md-4">
-                    <input name="available_from" type="text" class="form-control" id="dateTo" placeholder="Date From">
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <input type="number" name="price" class="form-control" placeholder="Price per night">
                 </div>
             </div>
@@ -116,8 +110,6 @@
                     <th>Description</th>\
                     <th>Location</th>\
                     <th>Price per night</th>\
-                    <th>Available From</th>\
-                    <th>Available To</th>\
                     <th>Number of Beds</th>\
                 </tr>\
         ';
@@ -135,8 +127,6 @@
                     <td>' + param.room_description + '</td>\
                     <td>' + param.location_id + '</td>\
                     <td>' + param.room_price / 100 + '</td>\
-                    <td>' + param.available_from + '</td>\
-                    <td>' + param.available_to + '</td>\
                     <td>' + param.number_of_beds + '</td>\
                 </tr>\
             ';

@@ -42,8 +42,6 @@ CREATE TABLE rooms
   location_id           int,
   number_of_beds        int,
   room_price            int,
-  available_from        DATE,
-  available_to          DATE,
   PRIMARY KEY (ID),
   FOREIGN KEY (location_id) REFERENCES locations(ID)
 );

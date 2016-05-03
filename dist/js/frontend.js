@@ -11,7 +11,7 @@ $(function() {
 
         var url = $( this ).prop( 'action' ) + 
             '/' + $('#town').val() + '/' 
-            + dateFrom + '/' + dateTo + '?api_key=b9b6cb5b0f322d9';
+            + dateFrom + '/' + dateTo + '?api_key=c2f3851b4fc9d0f';
 
         $.get(url)
             .done(function (data) {

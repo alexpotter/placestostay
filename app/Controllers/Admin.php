@@ -5,7 +5,6 @@ namespace app\Controllers;
 use app\Models\Locations;
 use app\Models\Rooms;
 use app\Models\Users;
-use DateTime;
 use Exception;
 
 class Admin extends Controller
@@ -164,10 +163,8 @@ class Admin extends Controller
      * @param $description
      * @param $numberOfBeds
      * @param $price
-     * @param $available_from
-     * @param $available_to
      */
-    public function addRoom($locationID, $description, $numberOfBeds, $price, $available_from, $available_to)
+    public function addRoom($locationID, $description, $numberOfBeds, $price)
     {
         if (! $numberOfBeds)
         {
@@ -178,14 +175,8 @@ class Admin extends Controller
 
         $room = new Rooms();
 
-        $dt = DateTime::createFromFormat('m/d/Y', $available_from);
-        $dateFrom = $dt->format('Y-m-d');
-
-        $dt = DateTime::createFromFormat('m/d/Y', $available_to);
-        $dateTo = $dt->format('Y-m-d');
-
         try {
-            $room->add($locationID, $numberOfBeds, $description, $price * 100, $dateFrom, $dateTo);
+            $room->add($locationID, $numberOfBeds, $description, $price * 100);
             return $this->returnJson([
                 'message' => 'Successfully added new room.'
             ], 200);

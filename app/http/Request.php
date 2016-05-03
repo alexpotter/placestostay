@@ -132,9 +132,7 @@ class Request
                         $_POST['location'],
                         $_POST['description'],
                         $_POST['number_of_beds'],
-                        $_POST['price'],
-                        $_POST['available_from'],
-                        $_POST['available_to']
+                        $_POST['price']
                     );
                 case 'get-rooms':
                     $this->admin = new Admin();
