@@ -23,6 +23,9 @@ class ConfigExample {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /**
+     *
+     */
     public function boot()
     {
         try {
@@ -48,11 +51,18 @@ class ConfigExample {
         }
     }
 
+    /**
+     * @param null $route
+     * @return string
+     */
     public function url($route = null)
     {
         return self::$url.'/'.$route;
     }
 
+    /**
+     * @return PDO
+     */
     public function db()
     {
         return $this->conn;

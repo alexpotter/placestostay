@@ -74,7 +74,12 @@ class Api extends Controller
             'error_code' => $code,
         ], $code);
     }
-    
+
+    /**
+     * @param $key
+     * @return bool
+     * @throws \Exception
+     */
     public function authenticate($key)
     {
         $api = new ApiModel();

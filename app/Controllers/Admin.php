@@ -66,22 +66,34 @@ class Admin extends Controller
         }
     }
 
+    /**
+     *
+     */
     public function logout()
     {
         session_destroy();
         return $this->redirect('admin');
     }
 
+    /**
+     *
+     */
     public function dashboard()
     {
         return $this->view('admin/dashboard');
     }
 
+    /**
+     *
+     */
     public function addLocationForm()
     {
         return $this->view('admin/location');
     }
 
+    /**
+     * @throws Exception
+     */
     public function addRoomForm()
     {
         $locations = new Locations();
@@ -128,6 +140,9 @@ class Admin extends Controller
         ], 200);
     }
 
+    /**
+     *
+     */
     public function getLocations()
     {
         $location = new Locations();

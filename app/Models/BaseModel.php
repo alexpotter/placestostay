@@ -16,6 +16,10 @@ class BaseModel
         $this->db = $app->db();
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function getAll()
     {
         try {
@@ -71,7 +75,12 @@ class BaseModel
             throw $e;
         }
     }
-    
+
+    /**
+     * @param array $binds
+     * @return array
+     * @throws Exception
+     */
     public function getWhereLike(array $binds) 
     {
         $columns = [];
