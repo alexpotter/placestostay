@@ -6,6 +6,8 @@ use Exception;
 
 class Room extends BaseModel
 {
+    protected $table = 'rooms';
+
     /**
      * @param $locationId
      * @param $numberOfBeds

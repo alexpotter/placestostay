@@ -49,10 +49,12 @@ class BaseModel
             $params[] = $param;
         }
 
-        $columnsForSql = implode(' = ? AND ', $columns).' = ?';
+        $columnsForSql = '`';
+        $columnsForSql = $columnsForSql . implode('` = ? AND `', $columns);
+        $columnsForSql = $columnsForSql . '` = ?';
 
         try {
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE ($columnsForSql)");
+            $query = $this->db->prepare("SELECT * FROM `$this->table` WHERE ($columnsForSql)");
 
             $query->execute($params);
 
@@ -82,10 +84,12 @@ class BaseModel
             $params[] = $param;
         }
 
-        $columnsForSql = implode(' = ? AND ', $columns).' = ?';
+        $columnsForSql = '`';
+        $columnsForSql = $columnsForSql . implode('` = ? AND `', $columns);
+        $columnsForSql = $columnsForSql . '` = ?';
 
         try {
-            $query = $this->db->prepare("SELECT * FROM $this->table WHERE ($columnsForSql)");
+            $query = $this->db->prepare("SELECT * FROM `$this->table` WHERE ($columnsForSql)");
 
             $query->execute($params);
 
@@ -116,7 +120,10 @@ class BaseModel
         }
 
         try {
-            $columnsForSql = implode(', ', $columns);
+            $columnsForSql = '`';
+            $columnsForSql = $columnsForSql . implode('`, `', $columns);
+            $columnsForSql = $columnsForSql . '`';
+
             $bindsForSql = '?';
 
             if (count($params) >= 1) {
@@ -125,7 +132,7 @@ class BaseModel
                 }
             }
 
-            $query = $this->db->prepare("INSERT INTO $this->table ($columnsForSql) VALUES ($bindsForSql);");
+            $query = $this->db->prepare("INSERT INTO `$this->table` ($columnsForSql) VALUES ($bindsForSql);");
 
             $query->execute($params);
         }

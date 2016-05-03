@@ -5,6 +5,7 @@ namespace app\Controllers;
 use app\Models\Location;
 use app\Models\Room;
 use app\Models\User;
+use DateTime;
 use Exception;
 
 class Admin extends Controller
@@ -161,12 +162,13 @@ class Admin extends Controller
         }
 
         $room = new Room();
-        $fromArray = explode('/', $available_from);
-        $dateFrom = $fromArray[2].'-'.$fromArray[0].'-'.$fromArray[1];
 
-        $toArray = explode('/', $available_from);
-        $dateTo = $toArray[2].'-'.$toArray[0].'-'.$toArray[1];
-        
+        $dt = DateTime::createFromFormat('m/d/Y', $available_from);
+        $dateFrom = $dt->format('Y-m-d');
+
+        $dt = DateTime::createFromFormat('m/d/Y', $available_to);
+        $dateTo = $dt->format('Y-m-d');
+
         try {
             $room->add($locationID, $numberOfBeds, $description, $price * 100, $dateFrom, $dateTo);
             return $this->returnJson([

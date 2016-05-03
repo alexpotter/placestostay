@@ -116,7 +116,7 @@
                 })
                 .done(function(response) {
                     $('#response').show().html('\
-                        <div class="alert alert-success">' + response + '</div>\
+                        <div class="alert alert-success">' + response.message + '</div>\
                     ');
                 })
                 .fail(function(jqXHR, status, thrownError) {
