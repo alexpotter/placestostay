@@ -39,7 +39,7 @@ class ConfigExample {
                 $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
 
                 $api = new Api();
-                $api->add($_SESSION['admin']['ID']);
+                $api->add(1);
             }
             catch (Exception $e)
             {
