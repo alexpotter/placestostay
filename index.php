@@ -9,9 +9,10 @@ include('app/Controllers/Api.php');
 include('app/Controllers/PlacesToStay.php');
 include('app/Controllers/Admin.php');
 include('app/Models/BaseModel.php');
-include('app/Models/User.php');
-include('app/Models/Location.php');
-include('app/Models/Room.php');
+include('app/Models/Users.php');
+include('app/Models/Locations.php');
+include('app/Models/Rooms.php');
+include('app/Models/Bookings.php');
 include('app/Models/Api.php');
 
 use app\Config;

@@ -77,7 +77,7 @@ class Locations extends BaseModel
         foreach ($locations as $location)
         {
             $roomsModel = new Rooms();
-            $rooms = $roomsModel->get([
+            $rooms = $roomsModel->getWithBookedDates([
                'location_id' => $location->ID,
             ]);
 

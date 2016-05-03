@@ -47,5 +47,32 @@ class Rooms extends BaseModel
             throw $e;
         }
     }
+
+    /**
+     * @param array $binds
+     * @return array|mixed
+     */
+    public function getWithBookedDates(array $binds)
+    {
+        $rooms = $this->get($binds);
+
+        foreach ($rooms as $room)
+        {
+            $room->bookedDates = [];
+
+            $bookingsModel = new Bookings();
+            $bookings = $bookingsModel->getForRoom($room->ID);
+
+            foreach($bookings as $booking)
+            {
+                $room->bookedDates[] = [
+                    'start' => $booking->date_from,
+                    'end' => $booking->date_to,
+                ];
+            }
+        }
+        
+        return $rooms;
+    }
 }
 
