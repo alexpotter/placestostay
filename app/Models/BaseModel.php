@@ -21,6 +21,8 @@ class BaseModel
         try {
             $query = $this->db->prepare("SELECT * FROM $this->table");
 
+            $query->setFetchMode(5);
+
             $query->execute();
 
             $rows = $query->fetchAll();
@@ -56,6 +58,40 @@ class BaseModel
         try {
             $query = $this->db->prepare("SELECT * FROM `$this->table` WHERE ($columnsForSql)");
 
+            $query->setFetchMode(5);
+
+            $query->execute($params);
+
+            $rows = $query->fetchAll();
+
+            return $rows;
+        }
+        catch (Exception $e)
+        {
+            throw $e;
+        }
+    }
+    
+    public function getWhereLike(array $binds) 
+    {
+        $columns = [];
+        $params = [];
+
+        foreach ($binds as $key => $param)
+        {
+            $columns[] = $key;
+            $params[] = '%'.$param.'%';
+        }
+
+        $columnsForSql = '`';
+        $columnsForSql = $columnsForSql . implode('` LIKE ? AND `', $columns);
+        $columnsForSql = $columnsForSql . '` LIKE ?';
+
+        try {
+            $query = $this->db->prepare("SELECT * FROM `$this->table` WHERE ($columnsForSql)");
+
+            $query->setFetchMode(5);
+
             $query->execute($params);
 
             $rows = $query->fetchAll();
@@ -90,6 +126,8 @@ class BaseModel
 
         try {
             $query = $this->db->prepare("SELECT * FROM `$this->table` WHERE ($columnsForSql)");
+
+            $query->setFetchMode(5);
 
             $query->execute($params);
 

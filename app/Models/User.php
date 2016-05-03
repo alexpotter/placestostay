@@ -32,11 +32,9 @@ class User extends BaseModel
     {
         try
         {
-            $user = $this->getFirst([
+            return $this->getFirst([
                 'email' => $email,
             ]);
-            $this->set($user['first_name'], $user['last_name'], $user['email']);
-            return $this;
         }
         catch (Exception $e)
         {
@@ -58,9 +56,8 @@ class User extends BaseModel
                 'email' => $email,
             ]);
 
-            if($user['user_type'] == 1 && password_verify($password, $user['password']))
+            if($user->user_type == 1 && password_verify($password, $user->password))
             {
-                $this->set($user['first_name'], $user['last_name'], $user['email']);
                 return $user;
             }
             else

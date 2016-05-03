@@ -64,7 +64,7 @@
                 <div class="form-group">
                     <select name="location" class="form-control">
                         <?php foreach ($locations as $location): ?>
-                            <option value="<?php echo $location['ID']; ?>"><?php echo $location['name']; ?></option>
+                            <option value="<?php echo $location->ID; ?>"><?php echo $location->name; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

@@ -2,15 +2,25 @@
 
 namespace app\Controllers;
 use app\Models\Api as ApiModel;
+use app\Models\Location;
 
 class Api extends Controller
 {
     /**
-     * @param $params
+     * @param $location
+     * @throws \Exception
      */
-    public function search($params)
+    public function search($location)
     {
-        $this->returnJson(['search' => $params], 200);
+        $locations = new Location();
+
+        $response = $locations->getWhereLike([
+            'town' => $location
+        ]);
+        
+        $this->returnJson([
+            'response' => $response
+        ], 200);
     }
 
     /**

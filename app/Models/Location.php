@@ -37,7 +37,7 @@ class Location extends BaseModel
                 'town' => $town,
                 'postcode' => $postcode,
                 'country' => $country,
-                'belongs_to' => $_SESSION['admin']['ID'],
+                'belongs_to' => $_SESSION['admin']->ID,
                 'location_type' => $type
             ]);
         }
