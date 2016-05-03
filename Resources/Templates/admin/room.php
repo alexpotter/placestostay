@@ -126,10 +126,6 @@
                     ');
                 });
         });
-
-        $.get( "<?php echo $this->url('admin/get-locations'); ?>", function( locations ) {
-            displayLocations(locations);
-        });
     });
 </script>
 </body>
