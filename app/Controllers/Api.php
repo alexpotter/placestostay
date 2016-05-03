@@ -7,19 +7,21 @@ use app\Models\Location;
 class Api extends Controller
 {
     /**
-     * @param $location
-     * @throws \Exception
+     * @param $town
      */
-    public function search($location)
+    public function search($town)
     {
-        $locations = new Location();
+        $locationsModel = new Location();
 
-        $response = $locations->getWhereLike([
-            'town' => $location
-        ]);
+        $locations = $locationsModel->getLocationsAndRoomsByTown($town);
+
+        if (empty($locations))
+        {
+            return $this->returnApiError('Locations not found', 'No locations exist within the town specified', 404);
+        }
         
-        $this->returnJson([
-            'response' => $response
+        return $this->returnJson([
+            'locations' => $locations,
         ], 200);
     }
 

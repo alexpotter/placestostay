@@ -4,6 +4,7 @@
 namespace app\Models;
 
 
+use ArrayObject;
 use Exception;
 
 class Location extends BaseModel
@@ -60,5 +61,40 @@ class Location extends BaseModel
         catch (Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * @param $town
+     * @return array
+     * @throws Exception
+     */
+    public function getLocationsAndRoomsByTown($town)
+    {
+        $returnArray = [];
+
+        $locations = $this->getWhereLike([
+            'town' => $town
+        ]);
+
+        foreach ($locations as $location)
+        {
+            $roomsModel = new Room();
+            $rooms = $roomsModel->get([
+               'location_id' => $location->ID,
+            ]);
+
+            if ($rooms)
+            {
+                $location->rooms = [];
+                foreach ($rooms as $room)
+                {
+                    $location->rooms[] = $room;
+                }
+            }
+
+            $returnArray[] = $location;
+        }
+
+        return $returnArray;
     }
 }
