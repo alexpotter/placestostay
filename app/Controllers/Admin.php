@@ -182,4 +182,23 @@ class Admin extends Controller
             ], 400);
         }
     }
+
+    /**
+     *
+     */
+    public function getRooms()
+    {
+        $rooms = new Room();
+        try {
+            return $this->returnJson([
+                'locations' => $rooms->all()
+            ], 200);
+        }
+        catch (Exception $e) {
+            return $this->returnJson([
+                'error' => $e->getMessage(),
+                'message' => 'Duplicate location entered.'
+            ], 400);
+        }
+    }
 }

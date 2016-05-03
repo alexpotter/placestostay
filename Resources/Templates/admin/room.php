@@ -103,28 +103,79 @@
         </form>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-12" id="listRooms"></div>
+</div>
 <script type="text/javascript">
+    function displayRooms(rooms)
+    {
+        var html  = '\
+            <h1 style="text-align: center">Current Rooms</h1>\
+            <table class="table" style="margin-top: 20px;">\
+                <tr>\
+                    <th>Description</th>\
+                    <th>Location</th>\
+                    <th>Price per night</th>\
+                    <th>Available From</th>\
+                    <th>Available To</th>\
+                    <th>Number of Beds</th>\
+                </tr>\
+        ';
+
+        rooms = $.parseJSON(rooms);
+
+        $.each(rooms, function(keys, params) {
+            $.each(params, function(key, param) {
+                var streetNumber = param.street_number == 0 ? '' : param.street_number;
+
+                console.log(param);
+
+                html += '\
+                <tr>\
+                    <td>' + param.room_description + '</td>\
+                    <td>' + param.location_id + '</td>\
+                    <td>' + param.room_price / 100 + '</td>\
+                    <td>' + param.available_from + '</td>\
+                    <td>' + param.available_to + '</td>\
+                    <td>' + param.number_of_beds + '</td>\
+                </tr>\
+            ';
+            });
+        });
+
+        html += '</table>';
+
+        $('#listRooms').html(html);
+    }
+
+    $.get( "<?php echo $this->url('admin/get-rooms'); ?>", function( rooms ) {
+        displayRooms(rooms);
+    });
+
     $(function() {
         $('#newRoom').submit(function(e) {
             e.preventDefault();
 
             $.ajax({
-                    url: $( this ).prop( 'action' ),
-                    type: 'post',
-                    dataType: 'json',
-                    data: $( this).serialize()
-                })
-                .done(function(response) {
-                    $('#response').show().html('\
-                        <div class="alert alert-success">' + response.message + '</div>\
-                    ');
-                })
-                .fail(function(jqXHR, status, thrownError) {
-                    var responseText = jQuery.parseJSON(jqXHR.responseText);
-                    $('#response').show().html('\
-                        <div class="alert alert-danger">' + responseText.message + '</div>\
-                    ');
+                url: $( this ).prop( 'action' ),
+                type: 'post',
+                dataType: 'json',
+                data: $( this).serialize()
+            })
+            .done(function(response) {
+                $('#response').show().html('\
+                    <div class="alert alert-success">' + response.message + '</div>\
+                ');
+                $.get( "<?php echo $this->url('admin/get-rooms'); ?>", function( rooms ) {
+                    displayRooms(rooms);
                 });
+            })
+            .fail(function(jqXHR, status, thrownError) {
+                var responseText = jQuery.parseJSON(jqXHR.responseText);
+                $('#response').show().html('\
+                    <div class="alert alert-danger">' + responseText.message + '</div>\
+                ');
+            });
         });
     });
 </script>

@@ -33,5 +33,19 @@ class Room extends BaseModel
             throw $e;
         }
     }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function all()
+    {
+        try {
+            return $this->getAll();
+        }
+        catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
 

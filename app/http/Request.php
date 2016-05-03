@@ -124,6 +124,9 @@ class Request
                         $_POST['available_from'],
                         $_POST['available_to']
                     );
+                case 'get-rooms':
+                    $this->admin = new Admin();
+                    return $this->admin->getRooms();
                 case 'logout':
                     $this->admin = new Admin();
                     $this->admin->logout();
