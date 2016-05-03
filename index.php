@@ -12,6 +12,7 @@ include('app/Models/BaseModel.php');
 include('app/Models/User.php');
 include('app/Models/Location.php');
 include('app/Models/Room.php');
+include('app/Models/Api.php');
 
 use app\Config;
 use app\http\Request;

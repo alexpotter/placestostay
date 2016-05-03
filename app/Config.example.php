@@ -2,6 +2,7 @@
 
 namespace app;
 
+use app\Models\Api;
 use app\Models\User;
 use Exception;
 use PDO;
@@ -36,6 +37,9 @@ class ConfigExample {
 
                 $admin = new User();
                 $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
+
+                $api = new Api();
+                $api->add($_SESSION['admin']['ID']);
             }
             catch (Exception $e)
             {

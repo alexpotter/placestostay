@@ -11,6 +11,16 @@
     <!-- Custom scripts -->
     <link rel="stylesheet" href="<?php echo $this->fileUrl('dist/css/style.css'); ?>">
     <script type="text/javascript" src="<?php echo $this->fileUrl('dist/js/frontend.js'); ?>"></script>
+
+    <!-- Date Stuff -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( "#dateFrom" ).datepicker();
+            $( "#dateTo" ).datepicker();
+        });
+    </script>
 </head>
 <body>
     <div class="row">
@@ -27,16 +37,22 @@
         </div>
         <div class="col-xs-6">
             <form class="form-horizontal" id="searchPlace">
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <h2 style="text-align: center;">Search a place:</h2>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <h2 style="text-align: center;">Search a place:</h2>
+                            <input type="text" name="location" class="form-control" style="font-size: 22pt; height: 60px;" placeholder="Location">
+                        </div>
                     </div>
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <input type="text" name="location" class="form-control" style="font-size: 22pt; height: 60px;">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <input name="available_to" class="form-control" type="text" id="dateFrom" style="font-size: 22pt; height: 60px;" placeholder="Date To">
+                        </div>
+                        <div class="col-md-6">
+                            <input name="available_from" type="text" class="form-control" id="dateTo" style="font-size: 22pt; height: 60px;" placeholder="Date From">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-8">
+                    <div class="form-group">
                         <button type="submit" class="btn btn-lg btn-success" style="display: block; margin: auto;">Search</button>
                     </div>
                 </div>
@@ -55,7 +71,7 @@
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 51.5074, lng: 0.1278},
-                zoom: 6
+                zoom: 8
             });
             var infoWindow = new google.maps.InfoWindow({map: map});
 
