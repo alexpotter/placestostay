@@ -77,15 +77,17 @@
         Availability
     </button>
     <!-- Modal -->
-    <div class="modal fade" id="roomAvailability" tabindex="-1" role="dialog" aria-labelledby="availabilityModalLabel">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade modal-lg" id="roomAvailability" tabindex="-1" role="dialog" aria-labelledby="availabilityModalLabel" style="margin: auto;">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Room Availability</h4>
                 </div>
-                <div class="modal-body" id="roomCalender">
+                <div class="modal-body">
+                    <canvas style="width:100%; height:500px; background-color: #d9edf7" id="roomCalender">
 
+                    </canvas>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
@@ -291,6 +293,8 @@
 
         function displayBookings(room) {
             console.log(room);
+
+            
 
             $('#displayAvailability').click();
         }
