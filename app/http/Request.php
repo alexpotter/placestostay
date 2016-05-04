@@ -82,7 +82,7 @@ class Request
                 case 'search':
                     if (! isset($this->variables[0]) || ! isset($this->variables[1]) || ! isset($this->variables[2]))
                     {
-                        return $this->api->returnApiError('Bad request', 'Town and dates are required', 400);
+                        return $this->api->returnApiError('Bad request', 'Bad inputs', 400);
                     }
                     $locationType = (! isset($this->variables[3])) ? null : $this->variables[3];
                     return $this->api->search($this->variables[0], $this->variables[1], $this->variables[2], $locationType);
