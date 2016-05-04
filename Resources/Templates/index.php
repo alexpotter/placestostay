@@ -264,6 +264,43 @@
                 var location = JSON.parse(localStorage.getItem("location" + this.getAttribute('data-value')));
                 geocodePlaceId(geocoder, map, infoWindow, location.google_id);
             });
+
+            $('#results').on('click', '.viewAndBook', function (e) {
+                e.preventDefault();
+
+                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
+                displayBookings(room);
+            });
+
+            $('#map').on('click', '.viewAndBook', function (e) {
+                e.preventDefault();
+
+                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
+                displayBookings(room);
+            });
+
+            $('#roomDateSelector').on('click', '.available', function (e) {
+                e.preventDefault();
+
+                if (localStorage.getItem('selectedTo') !== null) {
+                    localStorage.removeItem('selectedFrom');
+                    localStorage.removeItem('selectedTo');
+                }
+
+                if (localStorage.getItem('selectedFrom') === null) {
+                    localStorage.setItem('selectedFrom', $(this).attr("data-value"));
+                }
+                else {
+                    localStorage.setItem('selectedTo', $(this).attr("data-value"));
+                    // Now send request
+
+                }
+            });
+
+            $('#roomDateSelector').on('click', '.booked', function (e) {
+                e.preventDefault();
+                alert('Sorry, this day has already been booked.');
+            });
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -302,22 +339,6 @@
 
             $('#displayAvailability').click();
         }
-        
-        $(function () {
-            $('#results').on('click', '.viewAndBook', function (e) {
-                e.preventDefault();
-
-                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
-                displayBookings(room);
-            });
-
-            $('#map').on('click', '.viewAndBook', function (e) {
-                e.preventDefault();
-
-                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
-                displayBookings(room);
-            });
-        });
 
         window.roomCalander = {
             initialize: function(div, room) {
@@ -329,15 +350,27 @@
                 var dateTo = localStorage.getItem('dateTo').split('/');
                 this.dateTo  = new Date(dateTo[2], dateTo[0] - 1, dateTo[1]);
 
-                this.bookedDays = room.bookedDates;
+                var bookedDays = [];
+
+                $.each(room.bookedDates, function(key, param) {
+                    var start = param.start.split('-');
+                    start = new Date(start[0], start[1] - 1, start[2]);
+
+                    var end = param.end.split('-');
+                    end = new Date(end[0], end[1] - 1, end[2]);
+
+                    for (var date = start; date <= end; date.setDate(date.getDate() + 1)) {
+                        bookedDays.push(date.toJSON());
+                    }
+                });
+
+                this.bookedDays = bookedDays;
                 this.drawDates();
             },
 
             drawDates: function() {
-                console.log(this.bookedDays);
-
                 var weekday = new Array(7);
-                weekday[0]=  "Sunday";
+                weekday[0] = "Sunday";
                 weekday[1] = "Monday";
                 weekday[2] = "Tuesday";
                 weekday[3] = "Wednesday";
@@ -352,9 +385,11 @@
                 var html = '';
 
                 for (var date = this.dateFrom; date <= this.dateTo; date.setDate(date.getDate() + 1)) {
+                    var cssClass = $.inArray(date.toJSON(), this.bookedDays) === -1 ? 'available' : 'booked';
+
                     html += '\
-                        <div class="col-md-4" style="padding: 10px; 0">\
-                            <div style="border: solid 1px #000; border-radius: 5px; margin: 0 10px;">\
+                        <div class="col-md-3" style="padding: 10px 0;">\
+                            <div data-value="' + date + '" style="cursor: pointer; border: solid 1px #000; border-radius: 5px; margin: 0 10px;" class="' + cssClass + '">\
                                 <p style="font-size: 26pt; text-align: center;">' + weekday[date.getDay()] + '</p>\
                                 <p style="font-size: 34pt; text-align: center;">' + date.getDate() + '</p>\
                                 <p style="font-size: 26pt; text-align: center;">' + monthNames[date.getMonth()] + '</p>\
