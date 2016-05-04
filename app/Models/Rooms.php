@@ -49,8 +49,8 @@ class Rooms extends BaseModel
      * ONLY return booked dates between dates given otherwise array too large
      *
      * @param $locationId
-     * @param $to
      * @param $from
+     * @param $to
      * @return array
      * @throws Exception
      */

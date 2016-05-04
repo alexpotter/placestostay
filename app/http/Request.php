@@ -84,7 +84,8 @@ class Request
                     {
                         return $this->api->returnApiError('Bad request', 'Town and dates are required', 400);
                     }
-                    return $this->api->search($this->variables[0], $this->variables[1], $this->variables[2]);
+                    $locationType = (! isset($this->variables[3])) ? null : $this->variables[3];
+                    return $this->api->search($this->variables[0], $this->variables[1], $this->variables[2], $locationType);
                 case 'book':
                     // Make functional inputs $_POST
                     // i.e. $this->api->book($_POST['from']);

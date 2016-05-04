@@ -65,17 +65,18 @@ class Locations extends BaseModel
      * @param $town
      * @param $from
      * @param $to
+     * @param null $locationType
      * @return array
      * @throws Exception
      */
-    public function getLocationsAndRoomsByTown($town, $from, $to)
+    public function getLocationsAndRoomsByTown($town, $from, $to, $locationType = null)
     {
         $returnArray = [];
         
         try {
-
             $locations = $this->getWhereLike([
-                'town' => $town
+                'town' => $town,
+                'location_type' => $locationType ?: '',
             ]);
 
             foreach ($locations as $location) 

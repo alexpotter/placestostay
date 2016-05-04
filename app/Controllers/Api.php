@@ -11,13 +11,14 @@ class Api extends Controller
      * @param $town
      * @param $from
      * @param $to
+     * @param null $locationType
      */
-    public function search($town, $from = null, $to = null)
+    public function search($town, $from = null, $to = null, $locationType = null)
     {
         $locationsModel = new Locations();
 
         try {
-            $locations = $locationsModel->getLocationsAndRoomsByTown($town, $from, $to);
+            $locations = $locationsModel->getLocationsAndRoomsByTown($town, $from, $to, $locationType);
         }
         catch (Exception $e) {
             return $this->returnJson([
@@ -28,7 +29,7 @@ class Api extends Controller
 
         if (empty($locations))
         {
-            return $this->returnApiError('Locations not found', 'No locations exist within the town specified', 404);
+            return $this->returnApiError('Locations not found', 'No locations match search criteria', 404);
         }
         
         return $this->returnJson([
