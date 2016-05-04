@@ -138,11 +138,11 @@
                 infoWindow.close();
 
                 var dateFrom = $('#dateFrom').val().split('/');
-                localStorage.setItem('dateFrom', new Date(dateFrom[2], dateFrom[0] - 1, dateFrom[1]));
+                localStorage.setItem('dateFrom', $('#dateFrom').val());
                 dateFrom = dateFrom[2] + '-' + dateFrom[0] + '-' + dateFrom[1];
 
                 var dateTo = $('#dateTo').val().split('/');
-                localStorage.setItem('dateTo', new Date(dateTo[2], dateTo[0] - 1, dateTo[1]));
+                localStorage.setItem('dateTo', $('#dateTo').val());
                 dateTo = dateTo[2] + '-' + dateTo[0] + '-' + dateTo[1];
 
                 var url = $( this ).prop( 'action' ) +
@@ -322,8 +322,13 @@
         window.roomCalander = {
             initialize: function(div, room) {
                 this.calander = div;
-                this.dateFrom = localStorage.getItem('dateFrom');
-                this.dateTo = localStorage.getItem('dateTo');
+
+                var dateFrom = localStorage.getItem('dateFrom').split('/');
+                this.dateFrom  = new Date(dateFrom[2], dateFrom[0] - 1, dateFrom[1]);
+
+                var dateTo = localStorage.getItem('dateTo').split('/');
+                this.dateTo  = new Date(dateTo[2], dateTo[0] - 1, dateTo[1]);
+
                 this.bookedDays = room.bookedDates;
                 this.drawDates();
             },
@@ -331,15 +336,34 @@
             drawDates: function() {
                 console.log(this.bookedDays);
 
+                var weekday = new Array(7);
+                weekday[0]=  "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
+
+                var monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
+                var html = '';
+
                 for (var date = this.dateFrom; date <= this.dateTo; date.setDate(date.getDate() + 1)) {
-                    console.log(date);
+                    html += '\
+                        <div class="col-md-4" style="padding: 10px; 0">\
+                            <div style="border: solid 1px #000; border-radius: 5px; margin: 0 10px;">\
+                                <p style="font-size: 26pt; text-align: center;">' + weekday[date.getDay()] + '</p>\
+                                <p style="font-size: 34pt; text-align: center;">' + date.getDate() + '</p>\
+                                <p style="font-size: 26pt; text-align: center;">' + monthNames[date.getMonth()] + '</p>\
+                            </div>\
+                        </div>\
+                    ';
                 }
 
-                this.calander.html('\
-                    <div class="col-xs-3">\
-                        Hello\
-                    </div>\
-                ');
+                this.calander.html(html);
             }
         };
     </script>
