@@ -72,6 +72,28 @@
             </div>
         </div>
     </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="displayAvailability" data-target="#roomAvailability" style="display: none;">
+        Availability
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="roomAvailability" tabindex="-1" role="dialog" aria-labelledby="availabilityModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Room Availability</h4>
+                </div>
+                <div class="modal-body" id="roomCalender">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-lg">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         // Note: This example requires that you consent to location sharing when
         // prompted by your browser. If you see the error "The Geolocation service
@@ -266,20 +288,26 @@
                 }
             });
         }
+
+        function displayBookings(room) {
+            console.log(room);
+
+            $('#displayAvailability').click();
+        }
         
         $(function () {
             $('#results').on('click', '.viewAndBook', function (e) {
                 e.preventDefault();
 
                 var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
-                console.log(room);
+                displayBookings(room);
             });
 
             $('#map').on('click', '.viewAndBook', function (e) {
                 e.preventDefault();
 
                 var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
-                console.log(room);
+                displayBookings(room);
             });
         });
     </script>
