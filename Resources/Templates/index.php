@@ -85,9 +85,11 @@
                     <h4 class="modal-title" id="myModalLabel">Room Availability</h4>
                 </div>
                 <div class="modal-body">
-                    <canvas style="width:100%; height:500px; background-color: #d9edf7" id="roomCalender">
+                    <div class="row">
+                        <div class="col-xs-12" id="roomDateSelector">
 
-                    </canvas>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
@@ -136,9 +138,11 @@
                 infoWindow.close();
 
                 var dateFrom = $('#dateFrom').val().split('/');
+                localStorage.setItem('dateFrom', new Date(dateFrom[2], dateFrom[0] - 1, dateFrom[1]));
                 dateFrom = dateFrom[2] + '-' + dateFrom[0] + '-' + dateFrom[1];
 
                 var dateTo = $('#dateTo').val().split('/');
+                localStorage.setItem('dateTo', new Date(dateTo[2], dateTo[0] - 1, dateTo[1]));
                 dateTo = dateTo[2] + '-' + dateTo[0] + '-' + dateTo[1];
 
                 var url = $( this ).prop( 'action' ) +
@@ -211,7 +215,7 @@
                                     <p>\
                                         Number of beds: ' + param1.number_of_beds +'\
                                         <br>\
-                                        Price per night: ' + param1.room_price + '\
+                                        Price per night: £ ' + parseFloat(param1.room_price / 100).toFixed(2) + '\
                                     <p>\
                                         <button class="btn btn-success viewAndBook" data-value="' + param1.ID + '">Book now</button>\
                                     </p>\
@@ -294,7 +298,7 @@
         function displayBookings(room) {
             console.log(room);
 
-            
+            roomCalander.initialize($('#roomDateSelector'), room);
 
             $('#displayAvailability').click();
         }
@@ -314,6 +318,30 @@
                 displayBookings(room);
             });
         });
+
+        window.roomCalander = {
+            initialize: function(div, room) {
+                this.calander = div;
+                this.dateFrom = localStorage.getItem('dateFrom');
+                this.dateTo = localStorage.getItem('dateTo');
+                this.bookedDays = room.bookedDates;
+                this.drawDates();
+            },
+
+            drawDates: function() {
+                console.log(this.bookedDays);
+
+                for (var date = this.dateFrom; date <= this.dateTo; date.setDate(date.getDate() + 1)) {
+                    console.log(date);
+                }
+
+                this.calander.html('\
+                    <div class="col-xs-3">\
+                        Hello\
+                    </div>\
+                ');
+            }
+        };
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuK5rdDsSZpXyi5VBjW7g8N1IJUtAXZwA&callback=initMap">
