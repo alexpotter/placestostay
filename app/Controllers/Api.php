@@ -80,7 +80,7 @@ class Api extends Controller
     {
         return $this->returnJson([
             'error' => $error,
-            'reason' => $reason,
+            'message' => $reason,
             'error_code' => $code,
         ], $code);
     }

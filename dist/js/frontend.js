@@ -1,6 +1,7 @@
 $(function() {
+    localStorage.clear();
+
     $('#searchPlace').submit(function(e) {
-        $('#results').html('<h3>List here</h3>');
         e.preventDefault();
 
         var dateFrom = $('#dateFrom').val().split('/');
@@ -13,45 +14,66 @@ $(function() {
             '/' + $('#town').val() + '/' 
             + dateFrom + '/' + dateTo + '?api_key=c2f3851b4fc9d0f';
 
-        $.get(url)
-            .done(function (rooms) {
-                rooms = $.parseJSON(rooms);
+        $.get(url).done(function (rooms) {
+            $('#error').hide().html();
 
-                var html = '\
-                    <table class="table">\
-                        <tr>\
-                            <th>Location</th>\
-                            <th>Type</th>\
-                            <th>Room Description</th>\
-                            <th>Beds</th>\
-                            <th>Price per night</th>>\
-                        <tr/>\
-                ';
+            rooms = $.parseJSON(rooms);
 
-                $.each(rooms, function (keys, params) {
-                    $.each(params, function(key, param) {
+            var html = '\
+                <table class="table" style="margin-top: 20px;">\
+                    <tr>\
+                        <th>Location</th>\
+                        <th>Type</th>\
+                        <th>Room Description</th>\
+                        <th>Beds</th>\
+                        <th>Price per night</th>\
+                        <th>View on map</th>\
+                        <th>View dates and book</th>\
+                    <tr/>\
+            ';
 
-                        var name = param.name;
-                        var type = param.location_type;
+            $.each(rooms, function (keys, params) {
+                $.each(params, function(key, param) {
 
-                        $.each(param.rooms, function(key1, param1) {
-                            html += '\
-                                <tr>\
-                                    <td>' + name + '</td>\
-                                    <td>' + type + '</td>\
-                                    <td>' + param1.room_description + '</td>\
-                                    <td>' + param1.number_of_beds + '</td>\
-                                    <td> £ ' + param1.room_price / 100 + '</td>\
-                                </tr>\
-                            ';
-                            
-                            localStorage.setItem("room" + param1.ID, JSON.stringify(param1));
-                            console.log(JSON.parse(localStorage.getItem("room" + param1.ID)));
-                        });
+                    var name = param.name;
+                    var type = param.location_type;
+
+                    localStorage.setItem("location" + param.ID, JSON.stringify(param));
+                    console.log(JSON.parse(localStorage.getItem("location" + param.ID)));
+
+                    $.each(param.rooms, function(key1, param1) {
+                        html += '\
+                            <tr>\
+                                <td>' + name + '</td>\
+                                <td>' + type + '</td>\
+                                <td>' + param1.room_description + '</td>\
+                                <td>' + param1.number_of_beds + '</td>\
+                                <td> £ ' + parseFloat(param1.room_price / 100).toFixed(2) + '</td>\
+                                <td><a href="#" id="viewOnMap" data-value="' + param.ID + '">View on map</a></td>\
+                                <td><a href="#" id="viewAndBook" data-value="' + param1.ID + '">View and Book</a></td>\
+                            </tr>\
+                        ';
+
+                        localStorage.setItem("room" + param1.ID, JSON.stringify(param1));
+                        console.log(JSON.parse(localStorage.getItem("room" + param1.ID)));
                     });
                 });
-
-                $('#results').html(html);
             });
+
+            html += '</table>';
+
+            $('#results').html(html);
+        })
+        .fail(function(jqXHR, status, thrownError) {
+            var responseText = jQuery.parseJSON(jqXHR.responseText);
+            console.log('foo');
+            $('#error').show().html('\
+                <div class="alert alert-danger">' + responseText.message + '</div>\
+            ');
+        });
+    });
+
+    $('#results').on('click', '#viewAndBook', function (e) {
+        e.preventDefault();
     });
 });

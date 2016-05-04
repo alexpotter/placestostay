@@ -36,6 +36,11 @@
             </div>
         </div>
         <div class="col-xs-6">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1" id="error" style="display: none;">
+                    
+                </div>
+            </div>
             <form class="form-horizontal" id="searchPlace" method="post" action="<?php echo $this->url('api/search'); ?>">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-group">
@@ -78,6 +83,7 @@
                 zoom: 8
             });
             var infoWindow = new google.maps.InfoWindow({map: map});
+            var geocoder = new google.maps.Geocoder;
 
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
@@ -98,6 +104,14 @@
                 // Browser doesn't support Geolocation
                 handleLocationError(false, infoWindow, map.getCenter());
             }
+
+            $('#results').on('click', '#viewOnMap', function (e) {
+                e.preventDefault();
+
+                var location = JSON.parse(localStorage.getItem("location" + this.getAttribute('data-value')));
+
+                geocodePlaceId(geocoder, map, infoWindow, location.google_id);
+            });
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -105,6 +119,28 @@
             infoWindow.setContent(browserHasGeolocation ?
                 'Error: The Geolocation service failed.' :
                 'Error: Your browser doesn\'t support geolocation.');
+        }
+
+        function geocodePlaceId(geocoder, map, infowindow, placeId) {
+            var placeId = placeId;
+            geocoder.geocode({'placeId': placeId}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        map.setZoom(18);
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    } else {
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
         }
     </script>
     <script async defer
