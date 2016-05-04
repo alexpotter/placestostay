@@ -231,7 +231,7 @@
             });
 
             // View on map
-            $('#results').on('click', '.viewOnMap', function (e, infoWindows) {
+            $('#results').on('click', '.viewOnMap', function (e) {
                 e.preventDefault();
                 var location = JSON.parse(localStorage.getItem("location" + this.getAttribute('data-value')));
                 geocodePlaceId(geocoder, map, infoWindow, location.google_id);
@@ -268,8 +268,11 @@
         }
         
         $(function () {
-            $('#results').on('click', '#viewAndBook', function (e) {
+            $('#results').on('click', '.viewAndBook', function (e) {
                 e.preventDefault();
+
+                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
+                console.log(room);
             });
         });
     </script>
