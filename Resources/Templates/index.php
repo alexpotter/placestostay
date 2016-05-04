@@ -274,6 +274,13 @@
                 var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
                 console.log(room);
             });
+
+            $('#map').on('click', '.viewAndBook', function (e) {
+                e.preventDefault();
+
+                var room = JSON.parse(localStorage.getItem("room" + this.getAttribute('data-value')));
+                console.log(room);
+            });
         });
     </script>
     <script async defer
