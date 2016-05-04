@@ -73,6 +73,11 @@ class Rooms extends BaseModel
                     $bookFrom = new DateTime($from);
                     $bookTo = new DateTime($to);
 
+                    if ($bookFrom >= $bookTo)
+                    {
+                        throw new Exception('End date cannot exceed start date');
+                    }
+
                     $bookedFrom = new DateTime($booking->date_from);
                     $bookedTo = new DateTime($booking->date_to);
 

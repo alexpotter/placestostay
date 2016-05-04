@@ -66,7 +66,6 @@ $(function() {
         })
         .fail(function(jqXHR, status, thrownError) {
             var responseText = jQuery.parseJSON(jqXHR.responseText);
-            console.log('foo');
             $('#error').show().html('\
                 <div class="alert alert-danger">' + responseText.message + '</div>\
             ');
