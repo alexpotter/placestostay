@@ -58,6 +58,7 @@ class Controller
      */
     public function returnJson($array, $statusCode)
     {
+        header('Access-Control-Allow-Methods: GET, POST');
         http_response_code($statusCode);
         echo json_encode($array);
     }
