@@ -306,6 +306,11 @@
             });
         }
 
+        function displayBookings(room) {
+            roomCalander.initialize($('#roomDateSelector'), room);
+            $('#displayAvailability').click();
+        }
+
         $(function() {
             $('#roomDateSelector').on('click', '.selected', function() {
                 if (roomCalander.canBook != false) {
@@ -314,11 +319,6 @@
                 }
             });
         });
-
-        function displayBookings(room) {
-            roomCalander.initialize($('#roomDateSelector'), room);
-            $('#displayAvailability').click();
-        }
 
         window.roomCalander = {
             initialize: function(div, room) {
@@ -373,13 +373,14 @@
 
                 for (var count = 0; count < availableDays.length; count ++) {
                     availableDays[count].addEventListener('click', this.selectClickedDate, false);
-                    availableDays[count].addEventListener('mouseover', this.changeDatesOnMouseOver, false)
+                    availableDays[count].addEventListener('mouseover', this.changeDatesOnMouseOver, false);
                 }
 
-                $('#roomDateSelector').on('click', '.booked', function (e) {
-                    e.preventDefault();
-                    alert('Sorry, this day has already been booked.');
-                });
+                var bookedDays = document.getElementsByClassName('booked');
+
+                for (var count = 0; count < bookedDays.length; count ++) {
+                    bookedDays[count].addEventListener('click', this.showSelectorError, false);
+                }
             },
 
             drawDates: function() {
@@ -402,6 +403,10 @@
                 }
 
                 this.calander.html(html);
+            },
+
+            showSelectorError: function() {
+                alert('Sorry, this day has already been booked.')
             },
 
             selectClickedDate: function() {
