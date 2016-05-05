@@ -196,7 +196,6 @@ window.roomCalander = {
             alert(responseText.message);
             roomCalander.calander.html('');
             roomCalander.initialize(roomCalander.calander, roomCalander.room, roomCalander.endPoint);
-            this.initialize(roomCalander.calander, roomCalander.room);
         });
     }
 };

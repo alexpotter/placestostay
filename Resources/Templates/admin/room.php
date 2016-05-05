@@ -108,8 +108,8 @@
                 <tr>\
                     <th>Description</th>\
                     <th>Location</th>\
-                    <th>Price per night</th>\
                     <th>Number of Beds</th>\
+                    <th>Price per night</th>\
                 </tr>\
         ';
 
@@ -122,9 +122,9 @@
                 html += '\
                 <tr>\
                     <td>' + param.room_description + '</td>\
-                    <td>' + param.location_id + '</td>\
-                    <td>' + param.room_price / 100 + '</td>\
+                    <td>' + param.location.name + '</td>\
                     <td>' + param.number_of_beds + '</td>\
+                    <td> &pound;' + parseFloat(param.room_price / 100).toFixed(2) + '</td>\
                 </tr>\
             ';
             });

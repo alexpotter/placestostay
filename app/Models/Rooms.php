@@ -38,7 +38,15 @@ class Rooms extends BaseModel
     public function all()
     {
         try {
-            return $this->getAll();
+            $rooms = $this->getAll();
+            foreach ($rooms as $room)
+            {
+                $locations = new Locations();
+                $room->location = $locations->getFirst([
+                    'id' => $room->location_id,
+                ]);
+            }
+            return $rooms;
         }
         catch (Exception $e) {
             throw $e;
