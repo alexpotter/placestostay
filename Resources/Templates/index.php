@@ -10,6 +10,7 @@
     <script type="text/javascript" src="<?php echo $this->fileUrl('bootstrap/js/bootstrap.js'); ?>"></script>
     <!-- Custom scripts -->
     <link rel="stylesheet" href="<?php echo $this->fileUrl('dist/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo $this->fileUrl('dist/css/calendar.css'); ?>">
 
     <!-- Date Stuff -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

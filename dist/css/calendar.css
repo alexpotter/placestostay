@@ -1,0 +1,14 @@
+#roomDateSelector .booked {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+#roomDateSelector .available {
+    background-color: #4cae4c;
+    color: #ffffff;
+}
+
+#roomDateSelector .selected {
+    background-color: #d58512;
+    color: #ffffff;
+}
