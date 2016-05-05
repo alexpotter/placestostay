@@ -8,10 +8,11 @@ $(function() {
 });
 
 window.roomCalander = {
-    initialize: function(div, room, endpoint) {
+    initialize: function(div, room, endpoint, apiKey) {
         this.calander = div;
         this.room = room;
         this.endPoint = endpoint;
+        this.apiKey = apiKey;
 
         var dateFrom = localStorage.getItem('dateFrom').split('/');
         this.dateFrom  = new Date(dateFrom[2], dateFrom[0] - 1, dateFrom[1]);
@@ -137,13 +138,13 @@ window.roomCalander = {
         this.canBook = false;
 
         $.ajax({
-            url: this.endPoint + '?api_key=c2f3851b4fc9d0f',
+            url: roomCalander.endPoint + '?api_key=' + roomCalander.apiKey,
             type: 'post',
             dataType: 'json',
             data: {
-            room_id: this.room.ID,
-                date_from: this.selectedFrom,
-                date_to: this.selectedTo,
+            room_id: roomCalander.room.ID,
+                date_from: roomCalander.selectedFrom,
+                date_to: roomCalander.selectedTo,
                 user_id: 1
             }
         })

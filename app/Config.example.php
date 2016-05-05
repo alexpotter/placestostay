@@ -40,9 +40,11 @@ class ConfigExample {
 
                 $admin = new Users();
                 $admin->create('Alex', 'Potter', 'alex.potter1993@gmail.com', 'Solent24', 1);
+                $admin->create('Nick', 'Whitelegg', 'info@visitcollerado.com', 'Solent', 2);
 
                 $api = new Api();
                 $api->add(1);
+                $api->add(2);
             }
             catch (Exception $e)
             {

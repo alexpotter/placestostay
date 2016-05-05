@@ -148,7 +148,7 @@
 
                 var url = $( this ).prop( 'action' ) +
                     '/' + $('#town').val() + '/'
-                    + dateFrom + '/' + dateTo + '?api_key=c2f3851b4fc9d0f';
+                    + dateFrom + '/' + dateTo + '?api_key=dc45c373b4c92bc';
 
                 $.get(url).done(function (rooms) {
                     $('#error').hide().html();
@@ -309,7 +309,7 @@
         }
 
         function displayBookings(room) {
-            roomCalander.initialize($('#roomDateSelector'), room, '<?php echo $this->url('api/book'); ?>');
+            roomCalander.initialize($('#roomDateSelector'), room, '<?php echo $this->url('api/book'); ?>', 'dc45c373b4c92bc');
             $('#displayAvailability').click();
         }
     </script>
