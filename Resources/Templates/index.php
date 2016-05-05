@@ -153,8 +153,6 @@
                 $.get(url).done(function (rooms) {
                     $('#error').hide().html();
 
-                    rooms = $.parseJSON(rooms);
-
                     var html = '\
                     <table class="table" style="margin-top: 20px;">\
                         <tr>\

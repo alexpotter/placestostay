@@ -10,7 +10,6 @@
     <script type="text/javascript" src="<?php echo $this->fileUrl('bootstrap/js/bootstrap.js'); ?>"></script>
     <!-- Custom scripts -->
     <link rel="stylesheet" href="<?php echo $this->fileUrl('dist/css/style.css'); ?>">
-    <script type="text/javascript" src="<?php echo $this->fileUrl('dist/js/frontend.js'); ?>"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -210,8 +209,6 @@
                 </tr>\
         ';
 
-        locations = $.parseJSON(locations);
-
         $.each(locations, function(keys, params) {
             $.each(params, function(key, param) {
                 var streetNumber = param.street_number == 0 ? '' : param.street_number;
@@ -243,7 +240,7 @@
                 url: $( this ).prop( 'action' ),
                 type: 'post',
                 dataType: 'json',
-                data: $( this).serialize()
+                data: $( this ).serialize()
             })
             .done(function(response) {
                 if ($('#response').hasClass('alert-danger')) {
