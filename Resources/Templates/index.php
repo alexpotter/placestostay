@@ -306,9 +306,17 @@
             });
         }
 
+        $(function() {
+            $('#roomDateSelector').on('click', '.selected', function() {
+                if (roomCalander.canBook != false) {
+                    roomCalander.selectedTo = $(this).attr("data-value");
+                    roomCalander.makeBooking();
+                }
+            });
+        });
+
         function displayBookings(room) {
             roomCalander.initialize($('#roomDateSelector'), room);
-
             $('#displayAvailability').click();
         }
 
@@ -326,6 +334,7 @@
                 this.selectedFrom = null;
                 this.selectedTo = null;
                 this.selectedFromElement = null;
+                this.canBook = false;
 
                 var oneDay = 24*60*60*1000;
                 this.daysWithinRange = Math.round(Math.abs((this.dateFrom.getTime() - this.dateTo.getTime())/(oneDay)));
@@ -367,11 +376,6 @@
                     availableDays[count].addEventListener('mouseover', this.changeDatesOnMouseOver, false)
                 }
 
-
-                $('#roomDateSelector').on('click', '.selected', function() {
-                    //roomCalander.makeBooking(this.selectedFrom, $(this).attr("data-value"));
-                });
-
                 $('#roomDateSelector').on('click', '.booked', function (e) {
                     e.preventDefault();
                     alert('Sorry, this day has already been booked.');
@@ -401,15 +405,15 @@
             },
 
             selectClickedDate: function() {
-                if (roomCalander.selectedTo != null) {
-                    roomCalander.selectedFrom = null;
-                    roomCalander.selectedTo = null;
-                }
-
                 if (roomCalander.selectedFrom == null) {
+                    $(this).removeClass('available');
+                    $(this).addClass('selected');
                     roomCalander.selectedFrom = $(this).attr("data-value");
                     roomCalander.selectedFromElement = $(this).attr('id');
-                    $( this ).toggleClass('selected');
+
+                    setTimeout(function() {
+                        roomCalander.canBook = true;
+                    }, 200);
                 }
             },
 
@@ -423,11 +427,11 @@
 
                     for (var count = selectedFromId; count <= roomCalander.daysWithinRange; count ++) {
                         if (selectedFromId != currentHoverId) {
-                            if ($('#day-' + count).attr('class') != 'booked'  && (count <= currentHoverId) || (count > selectedFromElementId)) {
+                            if ($('#day-' + count).attr('class') != 'booked'  && (count <= currentHoverId) || (count > selectedFromElementId )) {
                                 $('#day-' + count).addClass('selected');
                                 $('#day-' + count).removeClass('available');
                             }
-                            else if ($('#day-' + count).attr('class') != 'booked'  && ((count >= currentHoverId) || (count < currentHoverId))) {
+                            else if ($('#day-' + count).attr('class') != 'booked'  && ((count >= currentHoverId) || (count => selectedFromElementId))) {
                                 $('#day-' + count).addClass('available');
                                 $('#day-' + count).removeClass('selected');
                             }
@@ -436,15 +440,17 @@
                 }
             },
 
-            makeBooking: function(dateFrom, dateTo) {
+            makeBooking: function() {
+                this.canBook = false;
+
                 $.ajax({
                     url: '<?php echo $this->url('api/book'); ?>?api_key=c2f3851b4fc9d0f',
                     type: 'post',
                     dataType: 'json',
                     data: {
                         room_id: this.room.ID,
-                        date_from: dateFrom,
-                        date_to: dateTo,
+                        date_from: this.selectedFrom,
+                        date_to: this.selectedTo,
                         user_id: 1
                     }
                 })
@@ -492,7 +498,11 @@
                 })
                 .fail(function(jqXHR, status, thrownError) {
                     var responseText = jQuery.parseJSON(jqXHR.responseText);
+
                     alert(responseText.message);
+                    roomCalander.calander.html('');
+                    roomCalander.initialize(roomCalander.calander, roomCalander.room);
+                    this.initialize(this.calander, this.room);
                 });
             }
         };
