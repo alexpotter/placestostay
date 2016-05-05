@@ -286,11 +286,37 @@
 
                 if (localStorage.getItem('selectedFrom') === null) {
                     localStorage.setItem('selectedFrom', $(this).attr("data-value"));
+                    localStorage.setItem('selectedFromElementId', $(this).attr('id'));
+                    $( this ).toggleClass('selected');
                 }
-                else {
-                    localStorage.setItem('selectedTo', $(this).attr("data-value"));
+            });
 
-                    roomCalander.makeBooking(localStorage.getItem('selectedFrom'), localStorage.getItem('selectedTo'));
+            $('#roomDateSelector').on('click', '.available .selected', function () {
+                roomCalander.makeBooking(localStorage.getItem('selectedFrom'), $(this).attr("data-value"));
+            });
+
+            $('#roomDateSelector').on('mouseover', '.available', function() {
+                if (localStorage.getItem('selectedFrom') !== null) {
+                    roomCalander.reset();
+
+                    var selectedFromElementId = localStorage.getItem('selectedFromElementId').split('-');
+                    var selectedFromId = selectedFromElementId[1];
+
+                    var currentHoverElementId = $(this).attr('id').split('-');
+                    var currentHoverId = currentHoverElementId[1];
+
+                    for (var count = selectedFromId; count <= currentHoverId; count ++) {
+                        if (selectedFromId != currentHoverId) {
+                            if ($('#day-' + count).attr('class') == 'available') {
+                                $('#day-' + count).toggleClass('selected');
+                            }
+                            else {
+                                if ($('#day-' + count).attr('class') != 'booked') {
+                                    $('#day-' + count).toggleClass('available');
+                                }
+                            }
+                        }
+                    }
                 }
             });
 
@@ -360,41 +386,48 @@
                     }
                 });
 
+                this.weekday = new Array(7);
+                this.weekday[0] = "Sunday";
+                this.weekday[1] = "Monday";
+                this.weekday[2] = "Tuesday";
+                this.weekday[3] = "Wednesday";
+                this.weekday[4] = "Thursday";
+                this.weekday[5] = "Friday";
+                this.weekday[6] = "Saturday";
+
+                this.monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
                 this.bookedDays = bookedDays;
                 this.drawDates();
             },
 
             drawDates: function() {
-                var weekday = new Array(7);
-                weekday[0] = "Sunday";
-                weekday[1] = "Monday";
-                weekday[2] = "Tuesday";
-                weekday[3] = "Wednesday";
-                weekday[4] = "Thursday";
-                weekday[5] = "Friday";
-                weekday[6] = "Saturday";
-
-                var monthNames = ["January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                ];
-
                 var html = '';
+                var count = 0;
 
-                for (var date = this.dateFrom; date <= this.dateTo; date.setDate(date.getDate() + 1)) {
+                for (var date = new Date(Date.parse(this.dateFrom.toDateString())); date <= this.dateTo; date.setDate(date.getDate() + 1)) {
                     var cssClass = $.inArray(date.toJSON(), this.bookedDays) === -1 ? 'available' : 'booked';
 
                     html += '\
                         <div class="col-md-3" style="padding: 10px 0;">\
-                            <div data-value="' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '" style="cursor: pointer; border: solid 1px #000; border-radius: 5px; margin: 0 10px;" class="' + cssClass + '">\
-                                <p style="font-size: 26pt; text-align: center;">' + weekday[date.getDay()] + '</p>\
+                            <div id="day-' + count + '" data-value="' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '" style="cursor: pointer; border: solid 1px #000; border-radius: 5px; margin: 0 10px;" class="' + cssClass + '">\
+                                <p style="font-size: 26pt; text-align: center;">' + this.weekday[date.getDay()] + '</p>\
                                 <p style="font-size: 34pt; text-align: center;">' + date.getDate() + '</p>\
-                                <p style="font-size: 26pt; text-align: center;">' + monthNames[date.getMonth()] + '</p>\
+                                <p style="font-size: 26pt; text-align: center;">' + this.monthNames[date.getMonth()] + '</p>\
                             </div>\
                         </div>\
                     ';
+                    count ++;
                 }
 
                 this.calander.html(html);
+            },
+
+            reset: function() {
+                this.calander.html('');
+                this.drawDates();
             },
 
             makeBooking: function(dateFrom, dateTo) {

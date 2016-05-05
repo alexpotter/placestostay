@@ -7,12 +7,17 @@ body {
     height: 500px;
 }
 
-.booked {
-    background-color: #FF0000;
-    color: #FFFFFF;
+#roomDateSelector .booked {
+    background-color: #ff0000;
+    color: #ffffff;
 }
 
-.available {
+#roomDateSelector .available {
     background-color: #4cae4c;
-    color: #FFFFFF;
+    color: #ffffff;
+}
+
+#roomDateSelector .selected {
+    background-color: #d58512;
+    color: #ffffff;
 }
