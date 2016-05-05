@@ -193,9 +193,9 @@ window.roomCalander = {
         .fail(function(jqXHR, status, thrownError) {
             var responseText = jQuery.parseJSON(jqXHR.responseText);
 
-            alert(responseText.message);
+            alert(responseText.error);
             roomCalander.calander.html('');
-            roomCalander.initialize(roomCalander.calander, roomCalander.room, roomCalander.endPoint);
+            roomCalander.initialize(roomCalander.calander, roomCalander.room, roomCalander.endPoint, roomCalander.apiKey);
         });
     }
 };
