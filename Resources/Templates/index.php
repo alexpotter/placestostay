@@ -175,7 +175,6 @@
                             var type = param.location_type;
 
                             localStorage.setItem("location" + param.ID, JSON.stringify(param));
-                            console.log(JSON.parse(localStorage.getItem("location" + param.ID)));
 
                             // Drop pins
                             var location = {lat: parseFloat(param.lat), lng: parseFloat(param.lng)};
@@ -222,7 +221,6 @@
                                 </div>';
 
                                 localStorage.setItem("room" + param1.ID, JSON.stringify(param1));
-                                console.log(JSON.parse(localStorage.getItem("room" + param1.ID)));
                             });
 
                             contentString += '\
@@ -333,8 +331,6 @@
         }
 
         function displayBookings(room) {
-            console.log(room);
-
             roomCalander.initialize($('#roomDateSelector'), room);
 
             $('#displayAvailability').click();
