@@ -90,7 +90,8 @@ class Request
                     // Make functional inputs $_POST
                     // i.e. $this->api->book($_POST['from']);
                     if ($_SERVER['REQUEST_METHOD'] == 'GET') return $this->api->returnFail('Attempted booking using GET', 405);
-                    return $this->api->book($this->variables[0], $this->variables[1], $this->variables[2], $this->variables[3]);
+                    if (! isset($_POST['room_id']) || ! isset($_POST['date_from']) || ! isset($_POST['date_to']) || ! isset($_POST['user_id'])) return $this->api->returnApiError('Something went wrong', 'room_id, date_from, user_id and date_to are required fields', 400);
+                    return $this->api->book($_POST['room_id'], $_POST['date_from'], $_POST['date_to'], $_POST['user_id']);
                 case 'get-booking':
                     // Use GET requires API KEY
                     echo 'View '.$this->variables[0];

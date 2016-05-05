@@ -4,6 +4,7 @@ namespace app\Models;
 
 use app\Config;
 use Exception;
+use PDO;
 
 class BaseModel
 {
@@ -188,7 +189,7 @@ class BaseModel
             throw $e;
         }
 
-        return true;
+        return $this->db->lastInsertId();
     }
 
     public function update()

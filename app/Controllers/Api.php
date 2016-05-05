@@ -2,7 +2,9 @@
 
 namespace app\Controllers;
 use app\Models\Api as ApiModel;
+use app\Models\Bookings;
 use app\Models\Locations;
+use app\Models\Rooms;
 use Exception;
 
 class Api extends Controller
@@ -38,23 +40,27 @@ class Api extends Controller
     }
 
     /**
-     * @param $id
-     * @param $guests
+     * @param $roomId
      * @param $from
      * @param $to
      */
-    public function book($id, $guests, $from, $to)
+    public function book($roomId, $from, $to, $userId)
     {
-        $this->returnJson([
-            'booking_id' => 200,
-            'location_id' => (int) $id,
-            'guests' => (int) $guests,
-            'total' => 200,
-            'currency' => 'gbp',
-            'dates' => [
-                'from' => $from,
-                'to' => $to,
-            ],
+        $booking = new Bookings();
+        
+        try {
+            $response = $booking->make($roomId, $from, $to, $userId);
+        }
+        catch (Exception $e) {
+            return $this->returnJson([
+                'error' => 'Booking failed',
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+
+        return $this->returnJson([
+            'message' => 'Booking successfully created',
+            'booking' => $response,
         ], 200);
     }
 

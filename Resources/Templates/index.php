@@ -292,8 +292,8 @@
                 }
                 else {
                     localStorage.setItem('selectedTo', $(this).attr("data-value"));
-                    // Now send request
 
+                    roomCalander.makeBooking(localStorage.getItem('selectedFrom'), localStorage.getItem('selectedTo'));
                 }
             });
 
@@ -343,6 +343,7 @@
         window.roomCalander = {
             initialize: function(div, room) {
                 this.calander = div;
+                this.room = room;
 
                 var dateFrom = localStorage.getItem('dateFrom').split('/');
                 this.dateFrom  = new Date(dateFrom[2], dateFrom[0] - 1, dateFrom[1]);
@@ -352,7 +353,7 @@
 
                 var bookedDays = [];
 
-                $.each(room.bookedDates, function(key, param) {
+                $.each(this.room.bookedDates, function(key, param) {
                     var start = param.start.split('-');
                     start = new Date(start[0], start[1] - 1, start[2]);
 
@@ -389,7 +390,7 @@
 
                     html += '\
                         <div class="col-md-3" style="padding: 10px 0;">\
-                            <div data-value="' + date + '" style="cursor: pointer; border: solid 1px #000; border-radius: 5px; margin: 0 10px;" class="' + cssClass + '">\
+                            <div data-value="' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '" style="cursor: pointer; border: solid 1px #000; border-radius: 5px; margin: 0 10px;" class="' + cssClass + '">\
                                 <p style="font-size: 26pt; text-align: center;">' + weekday[date.getDay()] + '</p>\
                                 <p style="font-size: 34pt; text-align: center;">' + date.getDate() + '</p>\
                                 <p style="font-size: 26pt; text-align: center;">' + monthNames[date.getMonth()] + '</p>\
@@ -399,6 +400,26 @@
                 }
 
                 this.calander.html(html);
+            },
+
+            makeBooking: function(dateFrom, dateTo) {
+                $.ajax({
+                    url: '<?php echo $this->url('api/book'); ?>?api_key=c2f3851b4fc9d0f',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        room_id: this.room.ID,
+                        date_from: dateFrom,
+                        date_to: dateTo,
+                        user_id: 1
+                    }
+                })
+                .done(function(response) {
+                    console.log(response);
+                })
+                .fail(function(jqXHR, status, thrownError) {
+                    console.log(responseText.message);
+                });
             }
         };
     </script>
