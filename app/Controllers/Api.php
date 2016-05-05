@@ -60,7 +60,7 @@ class Api extends Controller
 
         return $this->returnJson([
             'message' => 'Booking successfully created',
-            'booking' => $response,
+            'booking' => $booking->getBooking($response),
         ], 200);
     }
 

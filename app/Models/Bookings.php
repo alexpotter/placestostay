@@ -110,4 +110,33 @@ class Bookings extends BaseModel
             throw $e;
         }
     }
+
+    /**
+     * @param array $id
+     * @return array
+     * @throws Exception
+     */
+    public function getBooking($id) 
+    {
+        $rooms = new Rooms();
+        $locations = new Locations();
+
+        $booking = $this->getFirst([
+            'id' => $id
+        ]);
+        
+        $room = $rooms->getFirst([
+            'id' => $booking->room_id,
+        ]);
+        
+        $location = $locations->getFirst([
+            'id' => $room->location_id,
+        ]);
+        
+        $booking->room = $room;
+        
+        $booking->room->location = $location;
+        
+        return $booking;
+    }
 }
