@@ -26,6 +26,7 @@ class Api extends Controller
             return $this->returnJson([
                 'error' => $e->getMessage(),
                 'message' => 'Something went wrong',
+                'errorCode' => 400,
             ], 400);
         }
 
@@ -53,8 +54,9 @@ class Api extends Controller
         }
         catch (Exception $e) {
             return $this->returnJson([
-                'error' => 'Booking failed',
-                'message' => $e->getMessage(),
+                'error' => $e->getMessage(),
+                'message' => 'Booking failed',
+                'errorCode' => 400,
             ], 400);
         }
 
@@ -71,9 +73,9 @@ class Api extends Controller
     public function returnFail($reason, $responseCode)
     {
         $this->returnJson([
-            'status' => 'failed',
-            'reason' => $reason,
-            'responseCode' => $responseCode
+            'error' => 'Something went wrong',
+            'message' => $reason,
+            'errorCode' => $responseCode,
         ], $responseCode);
     }
 
