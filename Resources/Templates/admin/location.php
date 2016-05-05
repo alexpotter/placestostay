@@ -148,7 +148,7 @@
 
         var street_number = (typeof components.street_number !== 'undefined') ? components.street_number : '';
         var addressLine1 = (typeof components.route !== 'undefined') ? components.route : '';
-        var town = (typeof components.postal_town !== 'undefined') ? components.postal_town : '';
+        var town = (typeof components.postal_town !== 'undefined') ? components.postal_town : components.administrative_area_level_1;
         var postcode = (typeof components.postal_code !== 'undefined') ? components.postal_code : '';
         var country = (typeof components.country !== 'undefined') ? components.country : '';
         var url = '<?php echo $this->url('admin/add-location'); ?>';
