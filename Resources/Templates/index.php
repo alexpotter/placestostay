@@ -93,7 +93,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success btn-lg">Save changes</button>
                 </div>
             </div>
         </div>
@@ -411,10 +410,50 @@
                     }
                 })
                 .done(function(response) {
-                    console.log(response);
+                    $('#roomDateSelector').html('\
+                        <div class="alert alert-success">Booking successfully made</div>\
+                        <div class="col-xs-12" style="font-size: 14pt">\
+                            <table class="table">\
+                                <tr>\
+                                    <td>Booking ID</td>\
+                                    <td>' + response.booking.ID + '</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>From</td>\
+                                    <td>' + response.booking.date_from + '</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>To</td>\
+                                    <td>' + response.booking.date_to + '</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Paid</td>\
+                                    <td>' + parseFloat(response.booking.price_paid / 100).toFixed(2) + '</td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Location</td>\
+                                    <td>\
+                                        ' + response.booking.room.location.name + '<br>\
+                                        ' + response.booking.room.location.address_line1 + '<br>\
+                                        ' + response.booking.room.location.town + '<br>\
+                                        ' + response.booking.room.location.postcode + '<br>\
+                                        ' + response.booking.room.location.country + '\
+                                    </td>\
+                                </tr>\
+                                <tr>\
+                                    <td>Room</td>\
+                                    <td>\
+                                        Number of beds: ' + response.booking.room.number_of_beds + '</br>\
+                                        ' + response.booking.room.room_description + '\
+                                    </td>\
+                                </tr>\
+                            </table>\
+                        </div>\
+                    ');
                 })
                 .fail(function(jqXHR, status, thrownError) {
-                    console.log(responseText.message);
+                    var responseText = jQuery.parseJSON(jqXHR.responseText);
+                    alert(responseText.message);
                 });
             }
         };
