@@ -592,8 +592,8 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuK5rdDsSZpXyi5VBjW7g8N1IJUtAXZwA&callback=initMap">
 </script>
-<script src="<?php echo $this->fileUrl('dist/js/smooth-scroll.js'); ?>"></script>
 <!-- Initiate smooth scroll -->
+<script src="<?php echo $this->fileUrl('dist/js/smooth-scroll.js'); ?>"></script>
 <script>
     smoothScroll.init();
 </script>
