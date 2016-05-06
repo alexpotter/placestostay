@@ -250,7 +250,7 @@
                 .fail(function(jqXHR, status, thrownError) {
                     var responseText = jQuery.parseJSON(jqXHR.responseText);
                     $('#error').show().html('\
-                        <div class="alert alert-danger">' + responseText.message + '</div>\
+                        <div class="alert alert-danger">' + responseText.message + '<br>' + responseText.error '</div>\
                     ');
                 });
             });
