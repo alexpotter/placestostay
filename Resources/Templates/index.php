@@ -51,7 +51,7 @@
 
                 </div>
             </div>
-            <form class="form-horizontal" id="searchPlace" method="post" action="http://placestostay.alexpotter.dev/apotter/index.php/api/search">
+            <form class="form-horizontal" id="searchPlace" method="post" action="<?php echo $this->url('api/search'); ?>">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-group">
                         <div class="col-xs-12">
@@ -96,8 +96,8 @@
             <h1>1) The web service must be able to look up locations</h1>
             <p>Url:
                 <span class="code">
-                    <a href="http://placestostay.alexpotter.dev/apotter/index.php/api/search/London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc">
-                        http://placestostay.alexpotter.dev/apotter/index.php/api/search/London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc
+                    <a href="<?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc">
+                        <?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc
                     </a>
                 </span>
             </p>
