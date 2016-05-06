@@ -33,7 +33,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">API Settings</a></li>
+                        <li><a href="<?php echo $this->url('admin/my-api'); ?>">API Settings</a></li>
                         <li><a href="<?php echo $this->url('admin/logout'); ?>">Log out</a></li>
                     </ul>
                 </li>

@@ -2,6 +2,7 @@
 
 namespace app\Controllers;
 
+use app\Models\Api as AdminApi;
 use app\Models\Locations;
 use app\Models\Rooms;
 use app\Models\Users;
@@ -206,5 +207,17 @@ class Admin extends Controller
                 'message' => 'Duplicate location entered.'
             ], 400);
         }
+    }
+
+    public function myApi()
+    {
+        $apis = new AdminApi();
+        $api = $apis->getFirst([
+            'user_id' => $_SESSION['admin']->ID,
+        ]);
+
+        return $this->view('admin/api', [
+            'api' => $api,
+        ]);
     }
 }

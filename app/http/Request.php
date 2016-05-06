@@ -142,6 +142,9 @@ class Request
                 case 'get-rooms':
                     $this->admin = new Admin();
                     return $this->admin->getRooms();
+                case 'my-api':
+                    $this->admin = new Admin();
+                    return $this->admin->myApi();
                 case 'logout':
                     $this->admin = new Admin();
                     $this->admin->logout();

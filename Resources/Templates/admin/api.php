@@ -42,9 +42,11 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<div class="row"></div>
+<div class="row">
     <div class="col-xs-12">
-        <h1 style="text-align: center">Hello <?php echo $_SESSION['admin']->first_name.' '.$_SESSION['admin']->last_name; ?></h1>
+        <h1 style="text-align: center">Your API Key</h1>
+        <h1 style="text-align: center"><th><?php echo $api->api_key ; ?></th></h1>
     </div>
+</div>
 </body>
 </html>
