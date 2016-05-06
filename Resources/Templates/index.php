@@ -346,6 +346,11 @@
             <h1>9) Interactive calendar should be implemented - <a href="#searchContainer" data-scroll>View here</a></h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Admin can be found <a href="<?php echo $this->url('admin'); ?>">here</a>, please <a href="mailto:alex.potter1993@gmail.com">email</a> for username and password</h1>
+        </div>
+    </div>
 </div>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="displayAvailability" data-target="#roomAvailability" style="display: none;">
