@@ -125,7 +125,7 @@ window.roomCalander = {
                         $('#day-' + count).addClass('selected');
                         $('#day-' + count).removeClass('available');
                     }
-                    else if ($('#day-' + count).attr('class') != 'booked'  && ((count >= currentHoverId) || (count => selectedFromElementId))) {
+                    else if ($('#day-' + count).attr('class') != 'booked'  && ((count >= currentHoverId) || (count >= selectedFromElementId))) {
                         $('#day-' + count).addClass('available');
                         $('#day-' + count).removeClass('selected');
                     }
