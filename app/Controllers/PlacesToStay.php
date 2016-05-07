@@ -2,6 +2,8 @@
 
 namespace app\Controllers;
 
+use app\Models\Api as ApiModel;
+
 class PlacesToStay extends Controller
 {
     /**
@@ -9,8 +11,14 @@ class PlacesToStay extends Controller
      */
     public function index()
     {
+        $apiKeys = new ApiModel();
+        $apiKey = $apiKeys->getFirst([
+            'user_id' => 1,
+        ]);
+
         return $this->view('index', [
-            'message' => 'Start your search now',
+            'visitColoradoLink' => 'http://visitcolorado.alexpotter.dev',
+            'apiKey' => $apiKey->api_key,
         ]);
     }
 

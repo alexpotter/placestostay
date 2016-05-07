@@ -104,15 +104,15 @@
             <h1>1) The web service must be able to look up locations</h1>
             <p>Url:
                 <span class="code">
-                    <a href="<?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc">
-                        <?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=dc45c373b4c92bc
+                    <a href="<?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=<?php echo $apiKey; ?>">
+                        <?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31?api_key=<?php echo $apiKey; ?>
                     </a>
                 </span>
             </p>
             <p>And:
                 <span class="code">
-                    <a href="<?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31/Hotel?api_key=dc45c373b4c92bc">
-                        <?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31/Hotel?api_key=dc45c373b4c92bc
+                    <a href="<?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31/Hotel?api_key=<?php echo $apiKey; ?>">
+                        <?php echo $this->url('api/search/'); ?>London/2016-05-01/2016-05-31/Hotel?api_key=<?php echo $apiKey; ?>
                     </a>
                 </span>
             </p>
@@ -307,7 +307,7 @@
         <div class="col-xs-12">
             <h1>
                 4) Visit Colorado should be able to look up locations using API
-                - <a href="http://edward2.solent.ac.uk/~apotter/">View here</a>
+                - <a href="<?php echo $visitColoradoLink; ?>">View here</a>
             </h1>
         </div>
     </div>
@@ -323,7 +323,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <h1>7) Visit Colorado should be able to make bookings using API - <a href="http://edward2.solent.ac.uk/~apotter/">View here</a></h1>
+            <h1>7) Visit Colorado should be able to make bookings using API - <a href="<?php echo $visitColoradoLink; ?>">View here</a></h1>
         </div>
     </div>
     <div class="row">
@@ -416,7 +416,7 @@
 
             var url = $( this ).prop( 'action' ) +
                 '/' + $('#town').val() + '/'
-                + dateFrom + '/' + dateTo + '?api_key=dc45c373b4c92bc';
+                + dateFrom + '/' + dateTo + '?api_key=<?php echo $apiKey; ?>';
 
             $.get(url).done(function (rooms) {
                     $('#error').hide().html();
@@ -575,7 +575,7 @@
     }
 
     function displayBookings(room) {
-        roomCalander.initialize($('#roomDateSelector'), room, '<?php echo $this->url('api/book'); ?>', 'dc45c373b4c92bc');
+        roomCalander.initialize($('#roomDateSelector'), room, '<?php echo $this->url('api/book'); ?>', '<?php echo $apiKey; ?>');
         $('#displayAvailability').click();
     }
 </script>
@@ -585,7 +585,7 @@
         $('#q2Form').submit(function(e) {
             e.preventDefault();
             $.ajax({
-                    url: '<?php echo $this->url('api/book'); ?>?api_key=dc45c373b4c92bc',
+                    url: '<?php echo $this->url('api/book'); ?>?api_key=<?php echo $apiKey; ?>',
                     type: 'post',
                     dataType: 'json',
                     data: {
