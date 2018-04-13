@@ -30,7 +30,7 @@ class Controller
     public function url($path = null)
     {
         // return 'http://'.$_SERVER['SERVER_NAME'].'/~apotter/index.php/'.$path;
-        return 'http://'.$_SERVER['SERVER_NAME'].'/apotter/index.php/'.$path;
+        return 'https://'.$_SERVER['SERVER_NAME'].'/apotter/index.php/'.$path;
     }
 
     /**
@@ -40,7 +40,7 @@ class Controller
     public function fileUrl($path = null)
     {
         // return 'http://'.$_SERVER['SERVER_NAME'].'/~apotter/'.$path;
-        return 'http://'.$_SERVER['SERVER_NAME'].'/apotter/'.$path;
+        return 'https://'.$_SERVER['SERVER_NAME'].'/apotter/'.$path;
     }
 
     /**
